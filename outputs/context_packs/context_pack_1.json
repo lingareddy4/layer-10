@@ -1,0 +1,512 @@
+{
+  "question": "What routing-related issues were discussed, and what decisions were made?",
+  "generated_at": "2026-03-08T13:44:08Z",
+  "retrieval": {
+    "method": "lexical+confidence+recency",
+    "top_k": 8,
+    "expanded_result_count": 12
+  },
+  "ranked_items": [
+    {
+      "rank": 1,
+      "score": 0.5138,
+      "claim": {
+        "claim_id": "clm_a268297dd446c97564b3",
+        "subject_id": "repo:pallets/flask",
+        "subject_name": "pallets/flask",
+        "predicate": "repo_contains_issue",
+        "object_type": "entity",
+        "object_id": "issue:pallets/flask#5936",
+        "object_name": "pallets/flask#5936",
+        "object_value": null,
+        "confidence": 1.0,
+        "event_time": "2026-02-24T00:54:46Z",
+        "is_current": true
+      },
+      "citations": [
+        {
+          "evidence_id": "ev_e4de28c666f67bc4ee35",
+          "source_artifact_id": "issue:5936:body",
+          "source_url": "https://github.com/pallets/flask/issues/5936",
+          "source_type": "issue_body",
+          "issue_number": 5936,
+          "timestamp": "2026-02-24T00:54:46Z",
+          "excerpt": "Clarify recommended debug workflow in Quickstart documentation While reviewing the Quickstart documentation (https://flask.palletsprojects.com/en/stable/quickstart/#debug-mode), I noticed that debug mode is discussed but",
+          "char_start": 0,
+          "char_end": 220
+        }
+      ]
+    },
+    {
+      "rank": 2,
+      "score": 0.5126,
+      "claim": {
+        "claim_id": "clm_bac3c224434b36da4975",
+        "subject_id": "repo:pallets/flask",
+        "subject_name": "pallets/flask",
+        "predicate": "repo_contains_issue",
+        "object_type": "entity",
+        "object_id": "issue:pallets/flask#5932",
+        "object_name": "pallets/flask#5932",
+        "object_value": null,
+        "confidence": 1.0,
+        "event_time": "2026-02-21T11:08:31Z",
+        "is_current": true
+      },
+      "citations": [
+        {
+          "evidence_id": "ev_b8eebcf6e827bc50f224",
+          "source_artifact_id": "issue:5932:body",
+          "source_url": "https://github.com/pallets/flask/issues/5932",
+          "source_type": "issue_body",
+          "issue_number": 5932,
+          "timestamp": "2026-02-21T11:08:31Z",
+          "excerpt": "Add configurable JSON parsing limits and preprocessing hook Description Flask currently parses JSON input using json.loads() without providing an application-level mechanism to enforce payload size limits or preprocess r",
+          "char_start": 0,
+          "char_end": 220
+        }
+      ]
+    },
+    {
+      "rank": 3,
+      "score": 0.5089,
+      "claim": {
+        "claim_id": "clm_7cf48c4d0c5503c4bfc2",
+        "subject_id": "repo:pallets/flask",
+        "subject_name": "pallets/flask",
+        "predicate": "repo_contains_issue",
+        "object_type": "entity",
+        "object_id": "issue:pallets/flask#5915",
+        "object_name": "pallets/flask#5915",
+        "object_value": null,
+        "confidence": 1.0,
+        "event_time": "2026-02-11T22:24:21Z",
+        "is_current": true
+      },
+      "citations": [
+        {
+          "evidence_id": "ev_3209a064bf1f710b74c1",
+          "source_artifact_id": "issue:5915:body",
+          "source_url": "https://github.com/pallets/flask/issues/5915",
+          "source_type": "issue_body",
+          "issue_number": 5915,
+          "timestamp": "2026-02-11T22:24:21Z",
+          "excerpt": "Support for all methods in @app.route By default, `@app.route` sets `methods` to support only `GET` requests and the [documentation](https://flask.palletsprojects.com/en/stable/api/#flask.Flask.route) suggests that the p",
+          "char_start": 0,
+          "char_end": 220
+        }
+      ]
+    },
+    {
+      "rank": 4,
+      "score": 0.5015,
+      "claim": {
+        "claim_id": "clm_ee48f782122a2d71452b",
+        "subject_id": "repo:pallets/flask",
+        "subject_name": "pallets/flask",
+        "predicate": "repo_contains_issue",
+        "object_type": "entity",
+        "object_id": "issue:pallets/flask#5897",
+        "object_name": "pallets/flask#5897",
+        "object_value": null,
+        "confidence": 1.0,
+        "event_time": "2026-01-24T19:34:47Z",
+        "is_current": true
+      },
+      "citations": [
+        {
+          "evidence_id": "ev_b12959c6a623bc646f49",
+          "source_artifact_id": "issue:5897:body",
+          "source_url": "https://github.com/pallets/flask/issues/5897",
+          "source_type": "issue_body",
+          "issue_number": 5897,
+          "timestamp": "2026-01-24T19:34:47Z",
+          "excerpt": "package detection fails with namespace package in editable mode Given a package which uses namespace packaging and has been installed using \"editable installs\", Flask's scaffold (specifically `_find_package_path`) will e",
+          "char_start": 0,
+          "char_end": 220
+        }
+      ]
+    },
+    {
+      "rank": 5,
+      "score": 0.4753,
+      "claim": {
+        "claim_id": "clm_ab6ecd9b90edeeb8fd07",
+        "subject_id": "issue:pallets/flask#5897",
+        "subject_name": "pallets/flask#5897",
+        "predicate": "issue_mentions_person",
+        "object_type": "entity",
+        "object_id": "user:davidism",
+        "object_name": "davidism",
+        "object_value": null,
+        "confidence": 0.91,
+        "event_time": "2026-01-26T15:24:35Z",
+        "is_current": true
+      },
+      "citations": [
+        {
+          "evidence_id": "ev_4ee1c01ec8d92fa7fccd",
+          "source_artifact_id": "issue:5897:comment:3800170835",
+          "source_url": "https://github.com/pallets/flask/issues/5897#issuecomment-3800170835",
+          "source_type": "comment",
+          "issue_number": 5897,
+          "timestamp": "2026-01-26T15:24:35Z",
+          "excerpt": "@davidism thanks for looking at this and apologies if the cut-down wasn't clear.",
+          "char_start": 0,
+          "char_end": 80
+        }
+      ]
+    },
+    {
+      "rank": 6,
+      "score": 0.4665,
+      "claim": {
+        "claim_id": "clm_30cfde541f7974c04ac4",
+        "subject_id": "issue:pallets/flask#5897",
+        "subject_name": "pallets/flask#5897",
+        "predicate": "issue_action_item",
+        "object_type": "literal",
+        "object_id": null,
+        "object_name": "",
+        "object_value": "I'm not sure why you were unable to reproduce the issue, though I'm happy to accept that I need to bite the bullet and change the build system in use.",
+        "confidence": 0.65,
+        "event_time": "2026-01-27T21:10:27Z",
+        "is_current": true
+      },
+      "citations": [
+        {
+          "evidence_id": "ev_3ea5b4942d81d05a9b45",
+          "source_artifact_id": "issue:5897:comment:3807550447",
+          "source_url": "https://github.com/pallets/flask/issues/5897#issuecomment-3807550447",
+          "source_type": "comment",
+          "issue_number": 5897,
+          "timestamp": "2026-01-27T21:10:27Z",
+          "excerpt": "I'm not sure why you were unable to reproduce the issue, though I'm happy to accept that I need to bite the bullet and change the build system in use.",
+          "char_start": 316,
+          "char_end": 467
+        }
+      ]
+    },
+    {
+      "rank": 7,
+      "score": 0.4515,
+      "claim": {
+        "claim_id": "clm_4c951c4573827bc033f2",
+        "subject_id": "issue:pallets/flask#5897",
+        "subject_name": "pallets/flask#5897",
+        "predicate": "issue_conflict_signal",
+        "object_type": "literal",
+        "object_id": null,
+        "object_name": "",
+        "object_value": "I'm not sure why you were unable to reproduce the issue, though I'm happy to accept that I need to bite the bullet and change the build system in use.",
+        "confidence": 0.6,
+        "event_time": "2026-01-27T21:10:27Z",
+        "is_current": true
+      },
+      "citations": [
+        {
+          "evidence_id": "ev_3ea5b4942d81d05a9b45",
+          "source_artifact_id": "issue:5897:comment:3807550447",
+          "source_url": "https://github.com/pallets/flask/issues/5897#issuecomment-3807550447",
+          "source_type": "comment",
+          "issue_number": 5897,
+          "timestamp": "2026-01-27T21:10:27Z",
+          "excerpt": "I'm not sure why you were unable to reproduce the issue, though I'm happy to accept that I need to bite the bullet and change the build system in use.",
+          "char_start": 316,
+          "char_end": 467
+        }
+      ]
+    },
+    {
+      "rank": 8,
+      "score": 0.4496,
+      "claim": {
+        "claim_id": "clm_608684e0165a260d6091",
+        "subject_id": "repo:pallets/flask",
+        "subject_name": "pallets/flask",
+        "predicate": "repo_contains_issue",
+        "object_type": "entity",
+        "object_id": "issue:pallets/flask#5942",
+        "object_name": "pallets/flask#5942",
+        "object_value": null,
+        "confidence": 1.0,
+        "event_time": "2026-03-06T17:11:48Z",
+        "is_current": true
+      },
+      "citations": [
+        {
+          "evidence_id": "ev_c80411d419bed91272f4",
+          "source_artifact_id": "issue:5942:body",
+          "source_url": "https://github.com/pallets/flask/issues/5942",
+          "source_type": "issue_body",
+          "issue_number": 5942,
+          "timestamp": "2026-03-06T17:11:48Z",
+          "excerpt": "flask run should support pep723 Because no one wants to use: native pkgutil-style, declarative, non-declarative, setup.py, setup.cfg, pyproject.toml, pep517, setuptools, build, pip, namespace packages, normal packages, p",
+          "char_start": 0,
+          "char_end": 220
+        }
+      ]
+    },
+    {
+      "rank": 9,
+      "score": 0.4442,
+      "claim": {
+        "claim_id": "clm_5841b380aa6b3b5216cd",
+        "subject_id": "repo:pallets/flask",
+        "subject_name": "pallets/flask",
+        "predicate": "repo_contains_issue",
+        "object_type": "entity",
+        "object_id": "issue:pallets/flask#5933",
+        "object_name": "pallets/flask#5933",
+        "object_value": null,
+        "confidence": 1.0,
+        "event_time": "2026-02-21T15:52:17Z",
+        "is_current": true
+      },
+      "citations": [
+        {
+          "evidence_id": "ev_f3348b6b56693a178c09",
+          "source_artifact_id": "issue:5933:body",
+          "source_url": "https://github.com/pallets/flask/issues/5933",
+          "source_type": "issue_body",
+          "issue_number": 5933,
+          "timestamp": "2026-02-21T15:52:17Z",
+          "excerpt": "Add a built-in is_safe_redirect() helper to handle browser URL normalization (backslash → forward slash) Modern browsers normalize backslashes in navigation URLs (e.g., `\\\\evil.com`) into forward slashes (`//evil.com`).",
+          "char_start": 0,
+          "char_end": 220
+        }
+      ]
+    },
+    {
+      "rank": 10,
+      "score": 0.4442,
+      "claim": {
+        "claim_id": "clm_b20f1d06dd5baf44a066",
+        "subject_id": "repo:pallets/flask",
+        "subject_name": "pallets/flask",
+        "predicate": "repo_contains_issue",
+        "object_type": "entity",
+        "object_id": "issue:pallets/flask#5934",
+        "object_name": "pallets/flask#5934",
+        "object_value": null,
+        "confidence": 1.0,
+        "event_time": "2026-02-21T21:16:02Z",
+        "is_current": true
+      },
+      "citations": [
+        {
+          "evidence_id": "ev_562d244c3557b54e51a1",
+          "source_artifact_id": "issue:5934:body",
+          "source_url": "https://github.com/pallets/flask/issues/5934",
+          "source_type": "issue_body",
+          "issue_number": 5934,
+          "timestamp": "2026-02-21T21:16:02Z",
+          "excerpt": "[Security] Default session HMAC digest should be SHA-256, not SHA-1 ## Summary Flask's `SecureCookieSessionInterface` uses SHA-1 as the default HMAC digest for signing session cookies. SHA-1 has been deprecated by NIST (",
+          "char_start": 0,
+          "char_end": 220
+        }
+      ]
+    },
+    {
+      "rank": 11,
+      "score": 0.4438,
+      "claim": {
+        "claim_id": "clm_593b7c5b09e53dbeb6c3",
+        "subject_id": "repo:pallets/flask",
+        "subject_name": "pallets/flask",
+        "predicate": "repo_contains_issue",
+        "object_type": "entity",
+        "object_id": "issue:pallets/flask#5929",
+        "object_name": "pallets/flask#5929",
+        "object_value": null,
+        "confidence": 1.0,
+        "event_time": "2026-02-21T09:35:57Z",
+        "is_current": true
+      },
+      "citations": [
+        {
+          "evidence_id": "ev_82b6c9201334465a2828",
+          "source_artifact_id": "issue:5929:body",
+          "source_url": "https://github.com/pallets/flask/issues/5929",
+          "source_type": "issue_body",
+          "issue_number": 5929,
+          "timestamp": "2026-02-21T09:35:57Z",
+          "excerpt": ". .",
+          "char_start": 0,
+          "char_end": 3
+        }
+      ]
+    },
+    {
+      "rank": 12,
+      "score": 0.4405,
+      "claim": {
+        "claim_id": "clm_35cbeda65f41137b3399",
+        "subject_id": "repo:pallets/flask",
+        "subject_name": "pallets/flask",
+        "predicate": "repo_contains_issue",
+        "object_type": "entity",
+        "object_id": "issue:pallets/flask#5919",
+        "object_name": "pallets/flask#5919",
+        "object_value": null,
+        "confidence": 1.0,
+        "event_time": "2026-02-13T07:54:34Z",
+        "is_current": true
+      },
+      "citations": [
+        {
+          "evidence_id": "ev_360dc76cf7a3f20cbced",
+          "source_artifact_id": "issue:5919:body",
+          "source_url": "https://github.com/pallets/flask/issues/5919",
+          "source_type": "issue_body",
+          "issue_number": 5919,
+          "timestamp": "2026-02-13T07:54:34Z",
+          "excerpt": "llm junk LLM junk removed",
+          "char_start": 0,
+          "char_end": 25
+        }
+      ]
+    }
+  ],
+  "linked_entities": [
+    {
+      "entity_id": "repo:pallets/flask",
+      "entity_type": "repository",
+      "name": "pallets/flask",
+      "aliases": [
+        "pallets/flask"
+      ],
+      "meta": {
+        "owner": "pallets",
+        "repo": "flask"
+      }
+    },
+    {
+      "entity_id": "issue:pallets/flask#5936",
+      "entity_type": "issue",
+      "name": "pallets/flask#5936",
+      "aliases": [
+        "pallets/flask#5936"
+      ],
+      "meta": {
+        "number": 5936,
+        "title": "Clarify recommended debug workflow in Quickstart documentation",
+        "url": "https://github.com/pallets/flask/issues/5936"
+      }
+    },
+    {
+      "entity_id": "issue:pallets/flask#5932",
+      "entity_type": "issue",
+      "name": "pallets/flask#5932",
+      "aliases": [
+        "pallets/flask#5932"
+      ],
+      "meta": {
+        "number": 5932,
+        "title": "Add configurable JSON parsing limits and preprocessing hook",
+        "url": "https://github.com/pallets/flask/issues/5932"
+      }
+    },
+    {
+      "entity_id": "issue:pallets/flask#5915",
+      "entity_type": "issue",
+      "name": "pallets/flask#5915",
+      "aliases": [
+        "pallets/flask#5915"
+      ],
+      "meta": {
+        "number": 5915,
+        "title": "Support for all methods in @app.route",
+        "url": "https://github.com/pallets/flask/issues/5915"
+      }
+    },
+    {
+      "entity_id": "issue:pallets/flask#5897",
+      "entity_type": "issue",
+      "name": "pallets/flask#5897",
+      "aliases": [
+        "pallets/flask#5897"
+      ],
+      "meta": {
+        "number": 5897,
+        "title": "package detection fails with namespace package in editable mode",
+        "url": "https://github.com/pallets/flask/issues/5897"
+      }
+    },
+    {
+      "entity_id": "user:davidism",
+      "entity_type": "person",
+      "name": "davidism",
+      "aliases": [
+        "davidism",
+        "@davidism"
+      ],
+      "meta": {}
+    },
+    {
+      "entity_id": "issue:pallets/flask#5942",
+      "entity_type": "issue",
+      "name": "pallets/flask#5942",
+      "aliases": [
+        "pallets/flask#5942"
+      ],
+      "meta": {
+        "number": 5942,
+        "title": "flask run should support pep723",
+        "url": "https://github.com/pallets/flask/issues/5942"
+      }
+    },
+    {
+      "entity_id": "issue:pallets/flask#5933",
+      "entity_type": "issue",
+      "name": "pallets/flask#5933",
+      "aliases": [
+        "pallets/flask#5933"
+      ],
+      "meta": {
+        "number": 5933,
+        "title": "Add a built-in is_safe_redirect() helper to handle browser URL normalization (backslash → forward slash)",
+        "url": "https://github.com/pallets/flask/issues/5933"
+      }
+    },
+    {
+      "entity_id": "issue:pallets/flask#5934",
+      "entity_type": "issue",
+      "name": "pallets/flask#5934",
+      "aliases": [
+        "pallets/flask#5934"
+      ],
+      "meta": {
+        "number": 5934,
+        "title": "[Security] Default session HMAC digest should be SHA-256, not SHA-1",
+        "url": "https://github.com/pallets/flask/issues/5934"
+      }
+    },
+    {
+      "entity_id": "issue:pallets/flask#5929",
+      "entity_type": "issue",
+      "name": "pallets/flask#5929",
+      "aliases": [
+        "pallets/flask#5929"
+      ],
+      "meta": {
+        "number": 5929,
+        "title": ".",
+        "url": "https://github.com/pallets/flask/issues/5929"
+      }
+    },
+    {
+      "entity_id": "issue:pallets/flask#5919",
+      "entity_type": "issue",
+      "name": "pallets/flask#5919",
+      "aliases": [
+        "pallets/flask#5919"
+      ],
+      "meta": {
+        "number": 5919,
+        "title": "llm junk",
+        "url": "https://github.com/pallets/flask/issues/5919"
+      }
+    }
+  ]
+}

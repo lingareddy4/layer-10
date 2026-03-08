@@ -1,0 +1,557 @@
+{
+  "question": "Which issues were reopened after being closed?",
+  "generated_at": "2026-03-08T13:44:08Z",
+  "retrieval": {
+    "method": "lexical+confidence+recency",
+    "top_k": 8,
+    "expanded_result_count": 12
+  },
+  "ranked_items": [
+    {
+      "rank": 1,
+      "score": 0.5252,
+      "claim": {
+        "claim_id": "clm_59e92f6a3db8b58f5a50",
+        "subject_id": "issue:pallets/flask#5942",
+        "subject_name": "pallets/flask#5942",
+        "predicate": "issue_status",
+        "object_type": "literal",
+        "object_id": null,
+        "object_name": "",
+        "object_value": "closed",
+        "confidence": 0.99,
+        "event_time": "2026-03-06T19:50:53Z",
+        "is_current": true
+      },
+      "citations": [
+        {
+          "evidence_id": "ev_f883efec3c4d469600ae",
+          "source_artifact_id": "issue:5942:body",
+          "source_url": "https://github.com/pallets/flask/issues/5942",
+          "source_type": "issue_body",
+          "issue_number": 5942,
+          "timestamp": "2026-03-06T17:11:48Z",
+          "excerpt": "state=closed",
+          "char_start": 0,
+          "char_end": 1
+        },
+        {
+          "evidence_id": "ev_6dd6e88caafcd7666be8",
+          "source_artifact_id": "issue:5932:event:22969224210",
+          "source_url": "https://github.com/pallets/flask/issues/5942",
+          "source_type": "event",
+          "issue_number": 5932,
+          "timestamp": "2026-03-06T19:50:53Z",
+          "excerpt": "Issue was closed by @davidism.",
+          "char_start": 0,
+          "char_end": 30
+        }
+      ]
+    },
+    {
+      "rank": 2,
+      "score": 0.5206,
+      "claim": {
+        "claim_id": "clm_f8041a1d64a0306ea677",
+        "subject_id": "issue:pallets/flask#5936",
+        "subject_name": "pallets/flask#5936",
+        "predicate": "issue_status",
+        "object_type": "literal",
+        "object_id": null,
+        "object_name": "",
+        "object_value": "closed",
+        "confidence": 0.99,
+        "event_time": "2026-02-24T00:57:37Z",
+        "is_current": true
+      },
+      "citations": [
+        {
+          "evidence_id": "ev_74dc4f4fa93db2fd14ec",
+          "source_artifact_id": "issue:5936:body",
+          "source_url": "https://github.com/pallets/flask/issues/5936",
+          "source_type": "issue_body",
+          "issue_number": 5936,
+          "timestamp": "2026-02-24T00:54:46Z",
+          "excerpt": "state=closed",
+          "char_start": 0,
+          "char_end": 1
+        },
+        {
+          "evidence_id": "ev_d2a49b8d01ae8a7373b9",
+          "source_artifact_id": "issue:5932:event:22969224210",
+          "source_url": "https://github.com/pallets/flask/issues/5936",
+          "source_type": "event",
+          "issue_number": 5932,
+          "timestamp": "2026-02-24T00:57:37Z",
+          "excerpt": "Issue was closed by @davidism.",
+          "char_start": 0,
+          "char_end": 30
+        }
+      ]
+    },
+    {
+      "rank": 3,
+      "score": 0.5198,
+      "claim": {
+        "claim_id": "clm_7e20954e8738d9b389c4",
+        "subject_id": "issue:pallets/flask#5932",
+        "subject_name": "pallets/flask#5932",
+        "predicate": "issue_status",
+        "object_type": "literal",
+        "object_id": null,
+        "object_name": "",
+        "object_value": "closed",
+        "confidence": 0.99,
+        "event_time": "2026-02-21T15:04:41Z",
+        "is_current": true
+      },
+      "citations": [
+        {
+          "evidence_id": "ev_0ec768201628b762bde4",
+          "source_artifact_id": "issue:5932:event:22969224210",
+          "source_url": "https://github.com/pallets/flask/issues/5932",
+          "source_type": "event",
+          "issue_number": 5932,
+          "timestamp": "2026-02-21T15:04:41Z",
+          "excerpt": "Issue was closed by @davidism.",
+          "char_start": 0,
+          "char_end": 30
+        }
+      ]
+    },
+    {
+      "rank": 4,
+      "score": 0.5198,
+      "claim": {
+        "claim_id": "clm_25b27de921abd1b72d1e",
+        "subject_id": "issue:pallets/flask#5933",
+        "subject_name": "pallets/flask#5933",
+        "predicate": "issue_status",
+        "object_type": "literal",
+        "object_id": null,
+        "object_name": "",
+        "object_value": "closed",
+        "confidence": 0.99,
+        "event_time": "2026-02-21T17:55:11Z",
+        "is_current": true
+      },
+      "citations": [
+        {
+          "evidence_id": "ev_071969edc25a66d69762",
+          "source_artifact_id": "issue:5932:event:22969224210",
+          "source_url": "https://github.com/pallets/flask/issues/5933",
+          "source_type": "event",
+          "issue_number": 5932,
+          "timestamp": "2026-02-21T17:55:11Z",
+          "excerpt": "Issue was closed by @davidism.",
+          "char_start": 0,
+          "char_end": 30
+        }
+      ]
+    },
+    {
+      "rank": 5,
+      "score": 0.5198,
+      "claim": {
+        "claim_id": "clm_abc5d7321afe54ff7828",
+        "subject_id": "issue:pallets/flask#5929",
+        "subject_name": "pallets/flask#5929",
+        "predicate": "issue_status",
+        "object_type": "literal",
+        "object_id": null,
+        "object_name": "",
+        "object_value": "closed",
+        "confidence": 0.99,
+        "event_time": "2026-02-21T15:11:49Z",
+        "is_current": true
+      },
+      "citations": [
+        {
+          "evidence_id": "ev_f8f22cbaee08769abedd",
+          "source_artifact_id": "issue:5932:event:22969224210",
+          "source_url": "https://github.com/pallets/flask/issues/5929",
+          "source_type": "event",
+          "issue_number": 5932,
+          "timestamp": "2026-02-21T15:11:49Z",
+          "excerpt": "Issue was closed by @davidism.",
+          "char_start": 0,
+          "char_end": 30
+        }
+      ]
+    },
+    {
+      "rank": 6,
+      "score": 0.5198,
+      "claim": {
+        "claim_id": "clm_ac8139935e5cf82b14bb",
+        "subject_id": "issue:pallets/flask#5934",
+        "subject_name": "pallets/flask#5934",
+        "predicate": "issue_status",
+        "object_type": "literal",
+        "object_id": null,
+        "object_name": "",
+        "object_value": "closed",
+        "confidence": 0.99,
+        "event_time": "2026-02-21T21:27:24Z",
+        "is_current": true
+      },
+      "citations": [
+        {
+          "evidence_id": "ev_e5a148cdc64f1572b21d",
+          "source_artifact_id": "issue:5932:event:22969224210",
+          "source_url": "https://github.com/pallets/flask/issues/5934",
+          "source_type": "event",
+          "issue_number": 5932,
+          "timestamp": "2026-02-21T21:27:24Z",
+          "excerpt": "Issue was closed by @davidism.",
+          "char_start": 0,
+          "char_end": 30
+        }
+      ]
+    },
+    {
+      "rank": 7,
+      "score": 0.5196,
+      "claim": {
+        "claim_id": "clm_7e265c79eaba7419d8d2",
+        "subject_id": "issue:pallets/flask#5932",
+        "subject_name": "pallets/flask#5932",
+        "predicate": "issue_status",
+        "object_type": "literal",
+        "object_id": null,
+        "object_name": "",
+        "object_value": "closed",
+        "confidence": 0.97,
+        "event_time": "2026-03-08T00:12:40Z",
+        "is_current": true
+      },
+      "citations": [
+        {
+          "evidence_id": "ev_cee76496034e0131b70f",
+          "source_artifact_id": "issue:5932:body",
+          "source_url": "https://github.com/pallets/flask/issues/5932",
+          "source_type": "issue_body",
+          "issue_number": 5932,
+          "timestamp": "2026-02-21T11:08:31Z",
+          "excerpt": "state=closed",
+          "char_start": 0,
+          "char_end": 1
+        }
+      ]
+    },
+    {
+      "rank": 8,
+      "score": 0.5196,
+      "claim": {
+        "claim_id": "clm_02e1ae96401dd55df400",
+        "subject_id": "issue:pallets/flask#5933",
+        "subject_name": "pallets/flask#5933",
+        "predicate": "issue_status",
+        "object_type": "literal",
+        "object_id": null,
+        "object_name": "",
+        "object_value": "closed",
+        "confidence": 0.97,
+        "event_time": "2026-03-08T00:12:39Z",
+        "is_current": true
+      },
+      "citations": [
+        {
+          "evidence_id": "ev_69c0335a7adff52f549f",
+          "source_artifact_id": "issue:5933:body",
+          "source_url": "https://github.com/pallets/flask/issues/5933",
+          "source_type": "issue_body",
+          "issue_number": 5933,
+          "timestamp": "2026-02-21T15:52:17Z",
+          "excerpt": "state=closed",
+          "char_start": 0,
+          "char_end": 1
+        }
+      ]
+    },
+    {
+      "rank": 9,
+      "score": 0.4466,
+      "claim": {
+        "claim_id": "clm_196a8063ef1a997433a8",
+        "subject_id": "issue:pallets/flask#5942",
+        "subject_name": "pallets/flask#5942",
+        "predicate": "issue_opened_by",
+        "object_type": "entity",
+        "object_id": "user:thoughtsunificator",
+        "object_name": "thoughtsunificator",
+        "object_value": null,
+        "confidence": 0.99,
+        "event_time": "2026-03-06T17:11:48Z",
+        "is_current": true
+      },
+      "citations": [
+        {
+          "evidence_id": "ev_70213ab494b01fed4ff7",
+          "source_artifact_id": "issue:5942:body",
+          "source_url": "https://github.com/pallets/flask/issues/5942",
+          "source_type": "issue_body",
+          "issue_number": 5942,
+          "timestamp": "2026-03-06T17:11:48Z",
+          "excerpt": "Opened by @thoughtsunificator",
+          "char_start": 0,
+          "char_end": 1
+        }
+      ]
+    },
+    {
+      "rank": 10,
+      "score": 0.3656,
+      "claim": {
+        "claim_id": "clm_8555bff9ad49d8aeed07",
+        "subject_id": "issue:pallets/flask#5942",
+        "subject_name": "pallets/flask#5942",
+        "predicate": "issue_mentions_component",
+        "object_type": "entity",
+        "object_id": "component:cli",
+        "object_name": "Cli",
+        "object_value": null,
+        "confidence": 0.72,
+        "event_time": "2026-03-06T17:11:48Z",
+        "is_current": true
+      },
+      "citations": [
+        {
+          "evidence_id": "ev_bbbe81ee09edd69ef6d5",
+          "source_artifact_id": "issue:5942:body",
+          "source_url": "https://github.com/pallets/flask/issues/5942",
+          "source_type": "issue_body",
+          "issue_number": 5942,
+          "timestamp": "2026-03-06T17:11:48Z",
+          "excerpt": "flask run should support pep723 Because no one wants to use: native pkgutil-style, declarative, non-declarative, setup.",
+          "char_start": 0,
+          "char_end": 119
+        },
+        {
+          "evidence_id": "ev_7b8bf1c2409c7bc948fd",
+          "source_artifact_id": "issue:5942:body",
+          "source_url": "https://github.com/pallets/flask/issues/5942",
+          "source_type": "issue_body",
+          "issue_number": 5942,
+          "timestamp": "2026-03-06T17:11:48Z",
+          "excerpt": "Having `flask run` or any such primitive commands to allow running a flask application would make the entire process go from a 2 weeks pip marathon to a 10 minutes max of relaxing time where it just works magically.",
+          "char_start": 274,
+          "char_end": 490
+        },
+        {
+          "evidence_id": "ev_cbecfeaafff4ffbc66f7",
+          "source_artifact_id": "issue:5942:comment:4013801523",
+          "source_url": "https://github.com/pallets/flask/issues/5942#issuecomment-4013801523",
+          "source_type": "comment",
+          "issue_number": 5942,
+          "timestamp": "2026-03-06T19:50:53Z",
+          "excerpt": "The `flask run` command starts the development server.",
+          "char_start": 0,
+          "char_end": 54
+        },
+        {
+          "evidence_id": "ev_4e6d5d2d93af5a704a24",
+          "source_artifact_id": "issue:5942:comment:4013801523",
+          "source_url": "https://github.com/pallets/flask/issues/5942#issuecomment-4013801523",
+          "source_type": "comment",
+          "issue_number": 5942,
+          "timestamp": "2026-03-06T19:50:53Z",
+          "excerpt": "Therefore, `flask run` should not be used in that scenario.",
+          "char_start": 357,
+          "char_end": 417
+        },
+        {
+          "evidence_id": "ev_8aeef851ab728572e4b5",
+          "source_artifact_id": "issue:5942:comment:4014014152",
+          "source_url": "https://github.com/pallets/flask/issues/5942#issuecomment-4014014152",
+          "source_type": "comment",
+          "issue_number": 5942,
+          "timestamp": "2026-03-06T20:39:58Z",
+          "excerpt": "On Fri, Mar 06, 2026 at 11:51:15AM -0800, David Lord wrote: > davidism left a comment (pallets/flask#5942) > > The `flask run` command starts the development server.",
+          "char_start": 1050,
+          "char_end": 1216
+        },
+        {
+          "evidence_id": "ev_ccdcd26a47fc7996bf08",
+          "source_artifact_id": "issue:5942:comment:4014014152",
+          "source_url": "https://github.com/pallets/flask/issues/5942#issuecomment-4014014152",
+          "source_type": "comment",
+          "issue_number": 5942,
+          "timestamp": "2026-03-06T20:39:58Z",
+          "excerpt": "Therefore, `flask run` should not be used in that scenario.",
+          "char_start": 1527,
+          "char_end": 1587
+        }
+      ]
+    },
+    {
+      "rank": 11,
+      "score": 0.3446,
+      "claim": {
+        "claim_id": "clm_e7aa2f1283b85b2c0167",
+        "subject_id": "issue:pallets/flask#5942",
+        "subject_name": "pallets/flask#5942",
+        "predicate": "issue_action_item",
+        "object_type": "literal",
+        "object_id": null,
+        "object_name": "",
+        "object_value": "flask run should support pep723 Because no one wants to use: native pkgutil-style, declarative, non-declarative, setup.",
+        "confidence": 0.65,
+        "event_time": "2026-03-06T17:11:48Z",
+        "is_current": true
+      },
+      "citations": [
+        {
+          "evidence_id": "ev_bbbe81ee09edd69ef6d5",
+          "source_artifact_id": "issue:5942:body",
+          "source_url": "https://github.com/pallets/flask/issues/5942",
+          "source_type": "issue_body",
+          "issue_number": 5942,
+          "timestamp": "2026-03-06T17:11:48Z",
+          "excerpt": "flask run should support pep723 Because no one wants to use: native pkgutil-style, declarative, non-declarative, setup.",
+          "char_start": 0,
+          "char_end": 119
+        }
+      ]
+    },
+    {
+      "rank": 12,
+      "score": 0.3146,
+      "claim": {
+        "claim_id": "clm_06164e194d3cd9a17364",
+        "subject_id": "issue:pallets/flask#5942",
+        "subject_name": "pallets/flask#5942",
+        "predicate": "issue_mentions_named_entity",
+        "object_type": "entity",
+        "object_id": "named:max",
+        "object_name": "max",
+        "object_value": null,
+        "confidence": 0.55,
+        "event_time": "2026-03-06T17:11:48Z",
+        "is_current": true
+      },
+      "citations": [
+        {
+          "evidence_id": "ev_d32fc529ca6caa9ac419",
+          "source_artifact_id": "issue:5942:body",
+          "source_url": "https://github.com/pallets/flask/issues/5942",
+          "source_type": "issue_body",
+          "issue_number": 5942,
+          "timestamp": "2026-03-06T17:11:48Z",
+          "excerpt": "max",
+          "char_start": 439,
+          "char_end": 442
+        }
+      ]
+    }
+  ],
+  "linked_entities": [
+    {
+      "entity_id": "issue:pallets/flask#5942",
+      "entity_type": "issue",
+      "name": "pallets/flask#5942",
+      "aliases": [
+        "pallets/flask#5942"
+      ],
+      "meta": {
+        "number": 5942,
+        "title": "flask run should support pep723",
+        "url": "https://github.com/pallets/flask/issues/5942"
+      }
+    },
+    {
+      "entity_id": "issue:pallets/flask#5936",
+      "entity_type": "issue",
+      "name": "pallets/flask#5936",
+      "aliases": [
+        "pallets/flask#5936"
+      ],
+      "meta": {
+        "number": 5936,
+        "title": "Clarify recommended debug workflow in Quickstart documentation",
+        "url": "https://github.com/pallets/flask/issues/5936"
+      }
+    },
+    {
+      "entity_id": "issue:pallets/flask#5932",
+      "entity_type": "issue",
+      "name": "pallets/flask#5932",
+      "aliases": [
+        "pallets/flask#5932"
+      ],
+      "meta": {
+        "number": 5932,
+        "title": "Add configurable JSON parsing limits and preprocessing hook",
+        "url": "https://github.com/pallets/flask/issues/5932"
+      }
+    },
+    {
+      "entity_id": "issue:pallets/flask#5933",
+      "entity_type": "issue",
+      "name": "pallets/flask#5933",
+      "aliases": [
+        "pallets/flask#5933"
+      ],
+      "meta": {
+        "number": 5933,
+        "title": "Add a built-in is_safe_redirect() helper to handle browser URL normalization (backslash → forward slash)",
+        "url": "https://github.com/pallets/flask/issues/5933"
+      }
+    },
+    {
+      "entity_id": "issue:pallets/flask#5929",
+      "entity_type": "issue",
+      "name": "pallets/flask#5929",
+      "aliases": [
+        "pallets/flask#5929"
+      ],
+      "meta": {
+        "number": 5929,
+        "title": ".",
+        "url": "https://github.com/pallets/flask/issues/5929"
+      }
+    },
+    {
+      "entity_id": "issue:pallets/flask#5934",
+      "entity_type": "issue",
+      "name": "pallets/flask#5934",
+      "aliases": [
+        "pallets/flask#5934"
+      ],
+      "meta": {
+        "number": 5934,
+        "title": "[Security] Default session HMAC digest should be SHA-256, not SHA-1",
+        "url": "https://github.com/pallets/flask/issues/5934"
+      }
+    },
+    {
+      "entity_id": "user:thoughtsunificator",
+      "entity_type": "person",
+      "name": "thoughtsunificator",
+      "aliases": [
+        "thoughtsunificator",
+        "@thoughtsunificator"
+      ],
+      "meta": {}
+    },
+    {
+      "entity_id": "component:cli",
+      "entity_type": "component",
+      "name": "Cli",
+      "aliases": [
+        "Cli",
+        "cli"
+      ],
+      "meta": {}
+    },
+    {
+      "entity_id": "named:max",
+      "entity_type": "person",
+      "name": "max",
+      "aliases": [
+        "max"
+      ],
+      "meta": {}
+    }
+  ]
+}

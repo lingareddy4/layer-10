@@ -1,0 +1,1578 @@
+{
+  "meta": {
+    "corpus": "github_issues",
+    "owner": "pallets",
+    "repo": "flask",
+    "downloaded_at": "2026-03-08T13:34:12Z",
+    "max_issues_requested": 20,
+    "issues_fetched": 14,
+    "comments_fetched": 20,
+    "events_fetched": 50
+  },
+  "issues": [
+    {
+      "id": 3971852986,
+      "number": 5932,
+      "title": "Add configurable JSON parsing limits and preprocessing hook",
+      "state": "closed",
+      "created_at": "2026-02-21T11:08:31Z",
+      "updated_at": "2026-03-08T00:12:40Z",
+      "closed_at": "2026-02-21T15:04:40Z",
+      "html_url": "https://github.com/pallets/flask/issues/5932",
+      "user": "SABITHSAHEB",
+      "assignees": [],
+      "labels": [],
+      "body": "Description\nFlask currently parses JSON input using json.loads() without providing an application-level mechanism to enforce payload size limits or preprocess raw JSON before deserialization.\nThis feature would introduce configuration settings such as:\n•⁠  ⁠JSON_MAX_STRING_LENGTH – to reject JSON payloads exceeding a defined size before parsing.\n•⁠  ⁠JSON_PREPROCESS_RAW – to allow an optional callable to preprocess raw JSON text before json.loads() is executed.\n\nExample of the Problem This Would Resolve\nIf a client sends a very large JSON payload (for example, 15–20MB), Flask will attempt to parse it entirely in memory. This can lead to unnecessary memory consumption and CPU usage, especially in API-heavy environments. While infrastructure-level limits (e.g., reverse proxies) may mitigate this, application-level safeguards provide defense-in-depth and improve reliability.\nCurrently, this problem can only be addressed by subclassing JSONProvider, overriding loads(), or modifying framework internals. Providing built-in configuration support would make it easier to enforce consistent JSON parsing policies without custom framework patches.",
+      "comments_count": 2
+    },
+    {
+      "id": 3972254400,
+      "number": 5933,
+      "title": "Add a built-in is_safe_redirect() helper to handle browser URL normalization (backslash → forward slash)",
+      "state": "closed",
+      "created_at": "2026-02-21T15:52:17Z",
+      "updated_at": "2026-03-08T00:12:39Z",
+      "closed_at": "2026-02-21T17:55:11Z",
+      "html_url": "https://github.com/pallets/flask/issues/5933",
+      "user": "amadhan882",
+      "assignees": [],
+      "labels": [],
+      "body": "Modern browsers normalize backslashes in navigation URLs (e.g., `\\\\evil.com`) into forward slashes (`//evil.com`). This creates a discrepancy between how Flask/Werkzeug evaluates redirect targets and how user agents ultimately interpret them.\n\nA common pattern used by Flask developers to prevent protocol-relative redirects is:\n\n```python\nif not url.startswith(\"//\"):\n    return redirect(url)\n```\n\nHowever, the following payload bypasses this logic:\n\n```\n\\\\evil.com\n```\n\nFlask/Werkzeug evaluates this as a safe relative path (`startswith(\"//\") == False`), while browsers normalize it to:\n\n```\nhttps://evil.com\n```\n\nand perform an external redirect. This normalization behavior is consistent across Chrome, Firefox, and Safari.\n\nAs Flask does not provide a built-in redirect validation helper, developers routinely implement ad-hoc string checks that do not account for browser normalization rules, resulting in an ecosystem-wide class of open-redirect flaws.\n\n**Feature Request**\n\nIntroduce an official, browser-aware redirect safety utility in Flask or Werkzeug, similar to Django’s `is_safe_url`, to standardize redirect validation across the framework. The helper should:\n\n1. Normalize backslashes to forward slashes before validation.\n2. Reject protocol-relative URLs (`//example.com`).\n3. Optionally enforce allowed host checks.\n4. Provide a documented, recommended pattern for safe redirects.\n\n**Rationale**\n\n- This issue is not a flaw in Flask’s redirect implementation but a recurring security footgun for developers due to inconsistent handling between application logic and browser URL normalization.\n- Providing an official helper reduces the likelihood of open-redirect vulnerabilities in applications built on Flask.\n- This is framework hardening rather than a security bug report, and it aligns with the expectations set by other frameworks that offer standardized redirect-safety utilities.\n\nThis feature would give developers a reliable and recommended approach to validating redirect targets securely, reducing reliance on fragile custom logic.",
+      "comments_count": 1
+    },
+    {
+      "id": 3971741827,
+      "number": 5929,
+      "title": ".",
+      "state": "closed",
+      "created_at": "2026-02-21T09:35:57Z",
+      "updated_at": "2026-03-08T00:12:39Z",
+      "closed_at": "2026-02-21T09:36:23Z",
+      "html_url": "https://github.com/pallets/flask/issues/5929",
+      "user": "rootvector2",
+      "assignees": [],
+      "labels": [],
+      "body": ".",
+      "comments_count": 0
+    },
+    {
+      "id": 3972836402,
+      "number": 5934,
+      "title": "[Security] Default session HMAC digest should be SHA-256, not SHA-1",
+      "state": "closed",
+      "created_at": "2026-02-21T21:16:02Z",
+      "updated_at": "2026-03-08T00:12:37Z",
+      "closed_at": "2026-02-21T21:27:24Z",
+      "html_url": "https://github.com/pallets/flask/issues/5934",
+      "user": "uwezkhan",
+      "assignees": [],
+      "labels": [],
+      "body": "## Summary\n\nFlask's `SecureCookieSessionInterface` uses SHA-1 as the default HMAC digest for signing session cookies. SHA-1 has been deprecated by NIST (since 2011) and is no longer recommended for cryptographic use.\n\n## Location\n\n`src/flask/sessions.py`, line 293:\n\n```python\ndigest_method = staticmethod(_lazy_sha1)\n",
+      "comments_count": 0
+    },
+    {
+      "id": 4035256126,
+      "number": 5942,
+      "title": "flask run should support pep723",
+      "state": "closed",
+      "created_at": "2026-03-06T17:11:48Z",
+      "updated_at": "2026-03-06T20:58:40Z",
+      "closed_at": "2026-03-06T19:50:53Z",
+      "html_url": "https://github.com/pallets/flask/issues/5942",
+      "user": "thoughtsunificator",
+      "assignees": [],
+      "labels": [],
+      "body": "Because no one wants to use:\n\nnative pkgutil-style, declarative, non-declarative, setup.py, setup.cfg, pyproject.toml, pep517, setuptools, build, pip, namespace packages,  normal packages, pkg-util namespace package\n\nYou name it because I won't.\n\nHaving `flask run` or any such primitive commands to allow running a flask application would make the entire process go from a 2 weeks pip marathon to a 10 minutes max of relaxing time where it just works magically.\n\n\n",
+      "comments_count": 4
+    },
+    {
+      "id": 3935874237,
+      "number": 5919,
+      "title": "llm junk",
+      "state": "closed",
+      "created_at": "2026-02-13T07:54:34Z",
+      "updated_at": "2026-02-28T00:10:43Z",
+      "closed_at": "2026-02-13T08:00:30Z",
+      "html_url": "https://github.com/pallets/flask/issues/5919",
+      "user": "devagarwal847-code",
+      "assignees": [],
+      "labels": [],
+      "body": "LLM junk removed",
+      "comments_count": 1
+    },
+    {
+      "id": 3933890523,
+      "number": 5916,
+      "title": "`provide_automatic_options` is weird",
+      "state": "closed",
+      "created_at": "2026-02-12T20:32:21Z",
+      "updated_at": "2026-02-27T00:14:18Z",
+      "closed_at": "2026-02-12T21:07:52Z",
+      "html_url": "https://github.com/pallets/flask/issues/5916",
+      "user": "davidism",
+      "assignees": [
+        "davidism"
+      ],
+      "labels": [],
+      "body": "While dealing with trying to detect duplicate routes in https://github.com/pallets/werkzeug/issues/3105, I ran into an issue with Flask, which adds `OPTIONS` to every single rule by default.\n\nI started looking into Flask's `provide_automatic_options` feature, and it's just weird.\n\n- Why is there a `PROVIDE_AUTOMATIC_OPTIONS` config? What benefit is there to turning `OPTIONS` off at all, let alone configuring it for a given deployment.\n- Flask adds `OPTIONS` to every route, then has a check that runs on dispatching _every_ request to see if the method was `OPTIONS` and `provide_automatic_options` was enabled for the rule. Performing this check for every request seems wasteful, as opposed to adding an actual rule and endpoint so that the routing that's already happening handles it.\n    - But adding a rule is also sort of bad, as it results in a bunch of duplicate rules since Flask has no way to know what other rules have already been added. This can be caught with Werkzeug 3.2, and doesn't cause problems in earlier versions, but it's still annoying.\n- `provide_automatic_options` can be set as an attribute on the view function. There are some other attributes that are barely documented as well, such as `required_methods`. This is presumably mostly for `View` classes, but works on functions too, making type annotations unhelpful.\n- If `PROVIDE_AUTOMATIC_OPTIONS` is disabled (not the default), the logic for the `provide_automatic_options` argument and attribute doesn't work correctly to _enable_ it, it only works for _disabling_.\n- The tests for this were incomplete and had some issues. Some other tests were revealed to be adding duplicate rules as well. \n\nAt a minimum I've fixed the enabling issue. I've also got a change that registers a route and view for options instead of using special dispatch logic. We should also consider deprecating the config.",
+      "comments_count": 1
+    },
+    {
+      "id": 3928944031,
+      "number": 5915,
+      "title": "Support for all methods in @app.route",
+      "state": "closed",
+      "created_at": "2026-02-11T22:24:21Z",
+      "updated_at": "2026-02-26T00:11:53Z",
+      "closed_at": "2026-02-11T22:47:07Z",
+      "html_url": "https://github.com/pallets/flask/issues/5915",
+      "user": "vladko312",
+      "assignees": [],
+      "labels": [],
+      "body": "By default, `@app.route` sets `methods` to support only `GET` requests and the [documentation](https://flask.palletsprojects.com/en/stable/api/#flask.Flask.route) suggests that the parameters are then passed to `Rule`, where `methods=None` allows all methods to be used. In reality, even explicit `None` is treated as a default value and gets overwritten by `[\"GET\"]`. I suggest adding a way to allow all methods by explicitly passing `None`.\n\nThis feature would allow more direct control over `Rule` parameters when using `@app.route`, only using defaults when no value was provided. It is currently possible to work around the issue by creating the `Rule` directly, but it would be more convinient to have that option with `@app.route` decorators. It would also remove some confusion, as `None` being treated the same way as no value by `@app.route` while having a special meaning in `Rule` seems like a bug.",
+      "comments_count": 2
+    },
+    {
+      "id": 3980888493,
+      "number": 5936,
+      "title": "Clarify recommended debug workflow in Quickstart documentation",
+      "state": "closed",
+      "created_at": "2026-02-24T00:54:46Z",
+      "updated_at": "2026-02-24T00:57:37Z",
+      "closed_at": "2026-02-24T00:57:37Z",
+      "html_url": "https://github.com/pallets/flask/issues/5936",
+      "user": "adenbad",
+      "assignees": [],
+      "labels": [],
+      "body": "While reviewing the Quickstart documentation (https://flask.palletsprojects.com/en/stable/quickstart/#debug-mode), I noticed that debug mode is discussed but the distinction between using `app.run(debug=True)` and the recommended `flask run --debug` CLI flag is not clearly emphasized.\n\nMany external tutorials still reference `app.run(debug=True)`, and new users may not understand when to use the CLI flag versus enabling debug mode directly in application code.\n\nIt may be helpful to clarify:\n\n- That `flask run --debug` is the recommended development workflow\n- When `app.run(debug=True)` is appropriate\n- Why separating debug configuration from application code is considered best practice",
+      "comments_count": 1
+    },
+    {
+      "id": 3913760490,
+      "number": 5912,
+      "title": "Config.from_file() missing ENOTDIR in silent error handling",
+      "state": "closed",
+      "created_at": "2026-02-08T23:01:53Z",
+      "updated_at": "2026-02-24T00:13:08Z",
+      "closed_at": "2026-02-09T03:59:02Z",
+      "html_url": "https://github.com/pallets/flask/issues/5912",
+      "user": "veeceey",
+      "assignees": [],
+      "labels": [],
+      "body": "## Description\n\n`Config.from_file()` is missing `errno.ENOTDIR` in its silent error handling, while `Config.from_pyfile()` correctly includes it.\n\nIn `from_pyfile` (line ~193):\n```python\nif silent and e.errno in (errno.ENOENT, errno.EISDIR, errno.ENOTDIR):\n```\n\nIn `from_file` (line ~239):\n```python\nif silent and e.errno in (errno.ENOENT, errno.EISDIR):\n```\n\nThe `ENOTDIR` case was added to `from_pyfile` in PR #2581 (fixing issue #2545), but the fix was never applied to `from_json` (now `from_file`), even though the original issue title mentioned \"from_json, etc.\"\n\n## Reproduction\n\nWhen a component of the config file path is a regular file rather than a directory (e.g., `~/.myapp` is a file, and you try to load `~/.myapp/config.toml`), `from_file()` with `silent=True` raises `OSError` with `errno.ENOTDIR` instead of silently returning `False`.\n\n```python\nimport flask\nimport tomllib\n\napp = flask.Flask(__name__)\n# If ~/.myapp is a regular file, this raises instead of returning False\napp.config.from_file(\"~/.myapp/config.toml\", load=tomllib.load, text=False, silent=True)\n```\n\n## Expected Behavior\n\n`from_file(..., silent=True)` should return `False` when a path component is not a directory, matching the behavior of `from_pyfile(..., silent=True)`.\n\n## Environment\n\n- Flask version: 3.1.x / main branch",
+      "comments_count": 0
+    },
+    {
+      "id": 3856206368,
+      "number": 5902,
+      "title": "Improve alt text for Debug Mode interactive debugger image (accessibility)",
+      "state": "closed",
+      "created_at": "2026-01-26T14:27:03Z",
+      "updated_at": "2026-02-17T00:13:37Z",
+      "closed_at": "2026-01-26T15:20:29Z",
+      "html_url": "https://github.com/pallets/flask/issues/5902",
+      "user": "MariamTak",
+      "assignees": [],
+      "labels": [],
+      "body": "\nIn the Flask documentation section [“Debug Mode”](https://flask.palletsprojects.com/en/stable/quickstart/#debug-mode), there is an image demonstrating the interactive debugger with the following markup:\n```\n<img alt=\"The interactive debugger in action.\"\n     class=\"screenshot align-center\"\n     src=\"../_images/debugger.png\">  \n```\nThe alt text is very generic and does not clearly describe the content or purpose of the image.\nFor users who rely on screen readers, the current alt text does not convey that this is a Flask error page shown in the browser\nThis makes the documentation less accessible for users with visual impairments and does not fully meet the intent of WCAG 1.1.1 (Non-text Content)\n\n**Suggested improvement**\nReplace the existing alt text with something more descriptive, for example:\n“Flask debug mode error page showing a Python traceback and an interactive debugger panel in the browser",
+      "comments_count": 1
+    },
+    {
+      "id": 3880067115,
+      "number": 5907,
+      "title": "Internal refactor: simplify response tuple unpacking in make_response in app.py",
+      "state": "closed",
+      "created_at": "2026-01-31T20:50:02Z",
+      "updated_at": "2026-02-15T00:13:17Z",
+      "closed_at": "2026-01-31T21:17:45Z",
+      "html_url": "https://github.com/pallets/flask/issues/5907",
+      "user": "jnvw",
+      "assignees": [],
+      "labels": [],
+      "body": "This is an internal, non-user-facing refactor.\n\nThe `make_response` method currently contains inline logic to unpack\nresponse tuples with different valid shapes. While this logic is correct,\nit is dense and increases cognitive load in an already large method.\n\nRefactoring this logic into a small private helper would improve\nreadability and long-term maintainability without changing behavior.\n\nThe current tuple unpacking logic handles multiple valid forms\n((body, status, headers), (body, status), (body, headers)) inline inside\n`make_response`. This makes the control flow harder to follow and\nduplicates validation responsibilities within the method.\n\nThis is not easily improved via subclassing or extensions, as the logic\nis internal to Flask's response handling. A small internal refactor would\nisolate this responsibility and make future maintenance safer.\n",
+      "comments_count": 0
+    },
+    {
+      "id": 3851904746,
+      "number": 5897,
+      "title": "package detection fails with namespace package in editable mode",
+      "state": "closed",
+      "created_at": "2026-01-24T19:34:47Z",
+      "updated_at": "2026-02-11T00:17:32Z",
+      "closed_at": "2026-01-26T05:03:12Z",
+      "html_url": "https://github.com/pallets/flask/issues/5897",
+      "user": "PeterJCLaw",
+      "assignees": [],
+      "labels": [],
+      "body": "Given a package which uses namespace packaging and has been installed using \"editable installs\", Flask's scaffold (specifically `_find_package_path`) will error if the name passed to `Flask(...)` is the package name rather than a sub-module.\n\nThis affects cases where the name is the name of the package (and thus potentially not actually the `__name__`) though also happens when using `__name__` and the app is defined within a `__init__.py` in the root of the namespaced package.\n\nNotably the issue only appears when importing the app elsewhere -- running from a python process launched at the parent of the namespace package tree hides this.\n\nExample project:\n```\n├── flask-app\n│   ├── setup.py\n│   └── sr\n│       ├── comp\n│       │   ├── http\n│       │   │   ├── __init__.py\n│       │   └── __init__.pyi\n│       └── __init__.pyi\n└── run.py\n```\nThe `__init__.pyi` files are empty and shouldn't be needed, however are present in my original project as typing markers.\n\n```python\n# run.py\nprint(\"\")\nprint(\"run.py\")\nprint(\"\")\n\nfrom sr.comp.http import app\n\nprint(\"\")\nprint(\"/run.py\")\nprint(\"\")\n```\n```python\n# flask-app/sr/comp/http/__init__.py\nfrom flask import Flask\n\nprint(\"app = Flask(__name__)\")\napp = Flask(__name__)  # reproduces when defined in __init__.py\n\nprint(\"app = Flask('sr.comp.http')\")\napp = Flask(\"sr.comp.http\")  # reproduces when defined in e.g: server.py and `app` is re-exported via __init__.py\n# this latter case was my original case\n\n@app.route(\"/\")\ndef hello():\n    return \"Hello, World!\"\n```\n\n<details>\n<summary><code>flask-app/setup.py</code></summary>\n\n``` python\n# flask-app/setup.py\nfrom setuptools import find_namespace_packages, setup\n\nsetup(\n    name='sr.comp.http',\n    packages=find_namespace_packages(include=['sr.*']),\n    namespace_packages=['sr', 'sr.comp'],\n    install_requires=[\n        'Flask >=2.2',\n    ],\n)\n```\n\n</details>\n\nThe error is:\n```\nTraceback (most recent call last):\n  File \"/home/peter/play/flask-play/run.py\", line 6, in <module>\n    from sr.comp.http import app\n  File \"/home/peter/play/flask-play/flask-app/sr/comp/http/__init__.py\", line 5, in <module>\n    app = Flask(__name__)\n          ^^^^^^^^^^^^^^^\n  File \"/home/peter/.virtualenvs/flask-play/lib/python3.11/site-packages/flask/app.py\", line 239, in __init__\n    super().__init__(\n  File \"/home/peter/.virtualenvs/flask-play/lib/python3.11/site-packages/flask/sansio/app.py\", line 304, in __init__\n    instance_path = self.auto_find_instance_path()\n                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/peter/.virtualenvs/flask-play/lib/python3.11/site-packages/flask/sansio/app.py\", line 518, in auto_find_instance_path\n    prefix, package_path = find_package(self.import_name)\n                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/peter/.virtualenvs/flask-play/lib/python3.11/site-packages/flask/sansio/scaffold.py\", line 783, in find_package\n    package_path = _find_package_path(import_name)\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/peter/.virtualenvs/flask-play/lib/python3.11/site-packages/flask/sansio/scaffold.py\", line 748, in _find_package_path\n    search_location = next(\n                      ^^^^^\nStopIteration\n```\n\nI've been testing this by running the following to compare against a non-editable install:\n``` shell\npip install flask-app/ && python run.py && pip install -e flask-app/ && python run.py\n```\n\nI've also made some modifications to `flask/sansio/scaffold.py` to debug, which provides some insight. It looks like the issue is to do with whether or not the `package_path` is found to be relative to the `package_spec.submodule_search_locations`.\n\n<details>\n<summary><code>scaffold.py</code> diff</summary>\n\n```diff\n@@ -708,7 +708,10 @@\n \n def _find_package_path(import_name: str) -> str:\n     \"\"\"Find the path that contains the package or module.\"\"\"\n+    print()\n+    print(f\"_find_package_path({import_name=})\")\n     root_mod_name, _, _ = import_name.partition(\".\")\n+    print(f\"_find_package_path: {root_mod_name=}\")\n \n     try:\n         root_spec = importlib.util.find_spec(root_mod_name)\n@@ -721,18 +724,27 @@\n         #    - the module name was invalid\n         #    - the module name is __main__\n         #    - we raised `ValueError` due to `root_spec` being `None`\n+        print(\"CWD\")\n         return os.getcwd()\n \n     if root_spec.submodule_search_locations:\n         if root_spec.origin is None or root_spec.origin == \"namespace\":\n             # namespace package\n             package_spec = importlib.util.find_spec(import_name)\n+            print(f\"{package_spec=}\")\n \n             if package_spec is not None and package_spec.submodule_search_locations:\n                 # Pick the path in the namespace that contains the submodule.\n                 package_path = pathlib.Path(\n                     os.path.commonpath(package_spec.submodule_search_locations)\n                 )\n+                print(f\"{package_path=}\")\n+                search_locations=[\n+                    location\n+                    for location in root_spec.submodule_search_locations\n+                    if package_path.is_relative_to(location)\n+                ]\n+                print(f\"{search_locations=}\")\n                 search_location = next(\n                     location\n                     for location in root_spec.submodule_search_locations\n@@ -740,14 +752,18 @@\n                 )\n             else:\n                 # Pick the first path.\n+                print(\"Picking the first path\")\n                 search_location = root_spec.submodule_search_locations[0]\n \n+            print(f\"{os.path.dirname(search_location)=}\")\n             return os.path.dirname(search_location)\n         else:\n             # package with __init__.py\n+            print(f\"package with __init__.py: {os.path.dirname(os.path.dirname(root_spec.origin))=}\")\n             return os.path.dirname(os.path.dirname(root_spec.origin))\n     else:\n         # module\n+        print(f\"module: {os.path.dirname(root_spec.origin)=}\")\n         return os.path.dirname(root_spec.origin)  # type: ignore[type-var, return-value]\n \n \n```\n\n</details>\n\n<details>\n<summary>Full output (with scaffold printing)</summary>\n\n```\nProcessing ./flask-app\n  Installing build dependencies ... done\n  Getting requirements to build wheel ... done\n  Preparing metadata (pyproject.toml) ... done\nRequirement already satisfied: Flask>=2.2 in /home/peter/.virtualenvs/flask-play/lib/python3.11/site-packages (from sr.comp.http==0.0.0) (3.1.2)\nRequirement already satisfied: blinker>=1.9.0 in /home/peter/.virtualenvs/flask-play/lib/python3.11/site-packages (from Flask>=2.2->sr.comp.http==0.0.0) (1.9.0)\nRequirement already satisfied: click>=8.1.3 in /home/peter/.virtualenvs/flask-play/lib/python3.11/site-packages (from Flask>=2.2->sr.comp.http==0.0.0) (8.3.1)\nRequirement already satisfied: itsdangerous>=2.2.0 in /home/peter/.virtualenvs/flask-play/lib/python3.11/site-packages (from Flask>=2.2->sr.comp.http==0.0.0) (2.2.0)\nRequirement already satisfied: jinja2>=3.1.2 in /home/peter/.virtualenvs/flask-play/lib/python3.11/site-packages (from Flask>=2.2->sr.comp.http==0.0.0) (3.1.6)\nRequirement already satisfied: markupsafe>=2.1.1 in /home/peter/.virtualenvs/flask-play/lib/python3.11/site-packages (from Flask>=2.2->sr.comp.http==0.0.0) (3.0.3)\nRequirement already satisfied: werkzeug>=3.1.0 in /home/peter/.virtualenvs/flask-play/lib/python3.11/site-packages (from Flask>=2.2->sr.comp.http==0.0.0) (3.1.5)\nBuilding wheels for collected packages: sr.comp.http\n  Building wheel for sr.comp.http (pyproject.toml) ... done\n  Created wheel for sr.comp.http: filename=sr_comp_http-0.0.0-py3-none-any.whl size=2244 sha256=3f8b9ef6c2be19dfe215b2c753e08eba17f1d351d8990a453ee57f25b6554bad\n  Stored in directory: /home/peter/.cache/pip/wheels/cd/9c/02/1c78322e6692d753ef839820d853e11679311f30eec26b3432\nSuccessfully built sr.comp.http\nInstalling collected packages: sr.comp.http\n  Attempting uninstall: sr.comp.http\n    Found existing installation: sr.comp.http 0.0.0\n    Uninstalling sr.comp.http-0.0.0:\n      Successfully uninstalled sr.comp.http-0.0.0\nSuccessfully installed sr.comp.http-0.0.0\n\nrun.py\n\napp = Flask(__name__)\n\n_find_package_path(import_name='sr.comp.http')\n_find_package_path: root_mod_name='sr'\npackage_spec=ModuleSpec(name='sr.comp.http', loader=<_frozen_importlib_external.SourceFileLoader object at 0x7b2244ea6c50>, origin='/home/peter/.virtualenvs/flask-play/lib/python3.11/site-packages/sr/comp/http/__init__.py', submodule_search_locations=['/home/peter/.virtualenvs/flask-play/lib/python3.11/site-packages/sr/comp/http'])\npackage_path=PosixPath('/home/peter/.virtualenvs/flask-play/lib/python3.11/site-packages/sr/comp/http')\nsearch_locations=['/home/peter/.virtualenvs/flask-play/lib/python3.11/site-packages/sr']\nos.path.dirname(search_location)='/home/peter/.virtualenvs/flask-play/lib/python3.11/site-packages'\napp = Flask('sr.comp.http')\n\n_find_package_path(import_name='sr.comp.http')\n_find_package_path: root_mod_name='sr'\npackage_spec=ModuleSpec(name='sr.comp.http', loader=<_frozen_importlib_external.SourceFileLoader object at 0x7b2244ea6c50>, origin='/home/peter/.virtualenvs/flask-play/lib/python3.11/site-packages/sr/comp/http/__init__.py', submodule_search_locations=['/home/peter/.virtualenvs/flask-play/lib/python3.11/site-packages/sr/comp/http'])\npackage_path=PosixPath('/home/peter/.virtualenvs/flask-play/lib/python3.11/site-packages/sr/comp/http')\nsearch_locations=['/home/peter/.virtualenvs/flask-play/lib/python3.11/site-packages/sr']\nos.path.dirname(search_location)='/home/peter/.virtualenvs/flask-play/lib/python3.11/site-packages'\n\n/run.py\n\nObtaining file:///home/peter/play/flask-play/flask-app\n  Installing build dependencies ... done\n  Checking if build backend supports build_editable ... done\n  Getting requirements to build editable ... done\n  Preparing editable metadata (pyproject.toml) ... done\nRequirement already satisfied: Flask>=2.2 in /home/peter/.virtualenvs/flask-play/lib/python3.11/site-packages (from sr.comp.http==0.0.0) (3.1.2)\nRequirement already satisfied: blinker>=1.9.0 in /home/peter/.virtualenvs/flask-play/lib/python3.11/site-packages (from Flask>=2.2->sr.comp.http==0.0.0) (1.9.0)\nRequirement already satisfied: click>=8.1.3 in /home/peter/.virtualenvs/flask-play/lib/python3.11/site-packages (from Flask>=2.2->sr.comp.http==0.0.0) (8.3.1)\nRequirement already satisfied: itsdangerous>=2.2.0 in /home/peter/.virtualenvs/flask-play/lib/python3.11/site-packages (from Flask>=2.2->sr.comp.http==0.0.0) (2.2.0)\nRequirement already satisfied: jinja2>=3.1.2 in /home/peter/.virtualenvs/flask-play/lib/python3.11/site-packages (from Flask>=2.2->sr.comp.http==0.0.0) (3.1.6)\nRequirement already satisfied: markupsafe>=2.1.1 in /home/peter/.virtualenvs/flask-play/lib/python3.11/site-packages (from Flask>=2.2->sr.comp.http==0.0.0) (3.0.3)\nRequirement already satisfied: werkzeug>=3.1.0 in /home/peter/.virtualenvs/flask-play/lib/python3.11/site-packages (from Flask>=2.2->sr.comp.http==0.0.0) (3.1.5)\nBuilding wheels for collected packages: sr.comp.http\n  Building editable for sr.comp.http (pyproject.toml) ... done\n  Created wheel for sr.comp.http: filename=sr_comp_http-0.0.0-0.editable-py3-none-any.whl size=3459 sha256=a216bf634bddcae47327c746fe989a8a4115384810f305d565bb098311dbaeaa\n  Stored in directory: /tmp/pip-ephem-wheel-cache-6dk2qx5_/wheels/cd/9c/02/1c78322e6692d753ef839820d853e11679311f30eec26b3432\nSuccessfully built sr.comp.http\nInstalling collected packages: sr.comp.http\n  Attempting uninstall: sr.comp.http\n    Found existing installation: sr.comp.http 0.0.0\n    Uninstalling sr.comp.http-0.0.0:\n      Successfully uninstalled sr.comp.http-0.0.0\nSuccessfully installed sr.comp.http-0.0.0\n\nrun.py\n\napp = Flask(__name__)\n\n_find_package_path(import_name='sr.comp.http')\n_find_package_path: root_mod_name='sr'\npackage_spec=ModuleSpec(name='sr.comp.http', loader=<_frozen_importlib_external.SourceFileLoader object at 0x7e0760a89f90>, origin='/home/peter/play/flask-play/flask-app/sr/comp/http/__init__.py', submodule_search_locations=['/home/peter/play/flask-play/flask-app/sr/comp/http'])\npackage_path=PosixPath('/home/peter/play/flask-play/flask-app/sr/comp/http')\nsearch_locations=[]\nTraceback (most recent call last):\n  File \"/home/peter/play/flask-play/run.py\", line 6, in <module>\n    from sr.comp.http import app\n  File \"/home/peter/play/flask-play/flask-app/sr/comp/http/__init__.py\", line 5, in <module>\n    app = Flask(__name__)\n          ^^^^^^^^^^^^^^^\n  File \"/home/peter/.virtualenvs/flask-play/lib/python3.11/site-packages/flask/app.py\", line 239, in __init__\n    super().__init__(\n  File \"/home/peter/.virtualenvs/flask-play/lib/python3.11/site-packages/flask/sansio/app.py\", line 304, in __init__\n    instance_path = self.auto_find_instance_path()\n                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/peter/.virtualenvs/flask-play/lib/python3.11/site-packages/flask/sansio/app.py\", line 518, in auto_find_instance_path\n    prefix, package_path = find_package(self.import_name)\n                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/peter/.virtualenvs/flask-play/lib/python3.11/site-packages/flask/sansio/scaffold.py\", line 783, in find_package\n    package_path = _find_package_path(import_name)\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/peter/.virtualenvs/flask-play/lib/python3.11/site-packages/flask/sansio/scaffold.py\", line 748, in _find_package_path\n    search_location = next(\n                      ^^^^^\nStopIteration\n\n```\n\n</details>\n\n\nEnvironment:\n\n- Python version: 3.11 (and others)\n- Flask version: 3.1.2, also 2.x\n",
+      "comments_count": 5
+    },
+    {
+      "id": 3854501536,
+      "number": 5901,
+      "title": "Flask's blueprint's render templates rendering another blueprint's folder's html file !!!",
+      "state": "closed",
+      "created_at": "2026-01-26T04:48:05Z",
+      "updated_at": "2026-02-10T00:17:30Z",
+      "closed_at": "2026-01-26T04:51:33Z",
+      "html_url": "https://github.com/pallets/flask/issues/5901",
+      "user": "RanaUniverse",
+      "assignees": [],
+      "labels": [],
+      "body": "I was learning Flask & Web Application making.\nI am getting the problem when i am return the render templates of a html file  in blueprint i am getting another blueprint's html file. \nI am sharing the screenshots here below and say what is the problem here.\n\n<img width=\"1366\" height=\"768\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/1eeb056a-b53a-434b-ae46-e7e7712a448f\" />\nSee here in the render template at line 33, i wish it will render the `checking.html` file which is present in the `general_bp`'s folder.\n\n<img width=\"1366\" height=\"768\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/f5e491bc-b5b0-43f5-aa9a-0517197f2e79\" />\n\n<img width=\"1366\" height=\"768\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/1dd4ac18-26d5-4f9f-b587-a6f7256c60a1\" />\n\nSee here is the two `checking.html` file in different folder, but as i send the first image which should render the checking.html in the `general` folder it is rendering the `auth/checking.html` file.\n\n<img width=\"1366\" height=\"768\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/ad73f9b2-7e6e-4a9f-859d-6ead96b846eb\" />\nAs you see when i open the `/checking` route it is always giving the `auth>checking.html` file.\n\nI am not understanding why this is happening. is this any problem or i make any mistake here which cause the problem. Or anything i am doing wrong when i am in the `routes.py` file\n\nwhat the wrong, maybe in different blueprint's folder i have same file name so why it is taking another file 😢\n\nwhat you can see any problem here?\n\nPlease try to give a solution to this.\n\n\nEnvironment:\nLinux > Ubuntu(Xubuntu)\n\nUV Python 3.14.0\n\n<img width=\"587\" height=\"475\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/17f49e54-707d-4c36-8616-b31e897a51ca\" />",
+      "comments_count": 2
+    }
+  ],
+  "artifacts": [
+    {
+      "artifact_id": "issue:5932:body",
+      "artifact_type": "issue_body",
+      "repo": "pallets/flask",
+      "issue_number": 5932,
+      "source_id": "3971852986",
+      "source_url": "https://github.com/pallets/flask/issues/5932",
+      "author": "SABITHSAHEB",
+      "created_at": "2026-02-21T11:08:31Z",
+      "updated_at": "2026-03-08T00:12:40Z",
+      "text": "Add configurable JSON parsing limits and preprocessing hook Description Flask currently parses JSON input using json.loads() without providing an application-level mechanism to enforce payload size limits or preprocess raw JSON before deserialization. This feature would introduce configuration settings such as: •⁠ ⁠JSON_MAX_STRING_LENGTH – to reject JSON payloads exceeding a defined size before parsing. •⁠ ⁠JSON_PREPROCESS_RAW – to allow an optional callable to preprocess raw JSON text before json.loads() is executed. Example of the Problem This Would Resolve If a client sends a very large JSON payload (for example, 15–20MB), Flask will attempt to parse it entirely in memory. This can lead to unnecessary memory consumption and CPU usage, especially in API-heavy environments. While infrastructure-level limits (e.g., reverse proxies) may mitigate this, application-level safeguards provide defense-in-depth and improve reliability. Currently, this problem can only be addressed by subclassing JSONProvider, overriding loads(), or modifying framework internals. Providing built-in configuration support would make it easier to enforce consistent JSON parsing policies without custom framework patches.",
+      "meta": {
+        "state": "closed",
+        "labels": [],
+        "assignees": []
+      }
+    },
+    {
+      "artifact_id": "issue:5932:comment:3938621253",
+      "artifact_type": "comment",
+      "repo": "pallets/flask",
+      "issue_number": 5932,
+      "source_id": "3938621253",
+      "source_url": "https://github.com/pallets/flask/issues/5932#issuecomment-3938621253",
+      "author": "ThiefMaster",
+      "created_at": "2026-02-21T11:11:54Z",
+      "updated_at": "2026-02-21T11:11:54Z",
+      "text": "If this is an issue for you I recommend using your own JSON parser, ideally one that parses using a known schema because whenever you deserialize an arbitrary JSON payload, you risk limits. `request.json` is meant to provide something simple and easy to use (for most of the cases).",
+      "meta": {}
+    },
+    {
+      "artifact_id": "issue:5932:comment:3938927679",
+      "artifact_type": "comment",
+      "repo": "pallets/flask",
+      "issue_number": 5932,
+      "source_id": "3938927679",
+      "source_url": "https://github.com/pallets/flask/issues/5932#issuecomment-3938927679",
+      "author": "davidism",
+      "created_at": "2026-02-21T15:05:32Z",
+      "updated_at": "2026-02-21T15:05:32Z",
+      "text": "There is a plugable jaon interface if you need more. See Flask-orjson for example.",
+      "meta": {}
+    },
+    {
+      "artifact_id": "issue:5932:event:22969224210",
+      "artifact_type": "event",
+      "repo": "pallets/flask",
+      "issue_number": 5932,
+      "source_id": "22969224210",
+      "source_url": "https://github.com/pallets/flask/issues/5932",
+      "author": "davidism",
+      "created_at": "2026-02-21T15:04:41Z",
+      "updated_at": "2026-02-21T15:04:41Z",
+      "text": "Issue was closed by @davidism.",
+      "meta": {
+        "event": "closed",
+        "assignee": null,
+        "label": null
+      }
+    },
+    {
+      "artifact_id": "issue:5932:event:22969244459",
+      "artifact_type": "event",
+      "repo": "pallets/flask",
+      "issue_number": 5932,
+      "source_id": "22969244459",
+      "source_url": "https://github.com/pallets/flask/issues/5932",
+      "author": "pallets",
+      "created_at": "2026-02-21T15:07:15Z",
+      "updated_at": "2026-02-21T15:07:15Z",
+      "text": "Event 'user_blocked' by @pallets.",
+      "meta": {
+        "event": "user_blocked",
+        "assignee": null,
+        "label": null
+      }
+    },
+    {
+      "artifact_id": "issue:5932:event:23365890004",
+      "artifact_type": "event",
+      "repo": "pallets/flask",
+      "issue_number": 5932,
+      "source_id": "23365890004",
+      "source_url": "https://github.com/pallets/flask/issues/5932",
+      "author": "github-actions[bot]",
+      "created_at": "2026-03-08T00:12:40Z",
+      "updated_at": "2026-03-08T00:12:40Z",
+      "text": "Event 'locked' by @github-actions[bot].",
+      "meta": {
+        "event": "locked",
+        "assignee": null,
+        "label": null
+      }
+    },
+    {
+      "artifact_id": "issue:5933:body",
+      "artifact_type": "issue_body",
+      "repo": "pallets/flask",
+      "issue_number": 5933,
+      "source_id": "3972254400",
+      "source_url": "https://github.com/pallets/flask/issues/5933",
+      "author": "amadhan882",
+      "created_at": "2026-02-21T15:52:17Z",
+      "updated_at": "2026-03-08T00:12:39Z",
+      "text": "Add a built-in is_safe_redirect() helper to handle browser URL normalization (backslash → forward slash) Modern browsers normalize backslashes in navigation URLs (e.g., `\\\\evil.com`) into forward slashes (`//evil.com`). This creates a discrepancy between how Flask/Werkzeug evaluates redirect targets and how user agents ultimately interpret them. A common pattern used by Flask developers to prevent protocol-relative redirects is: ```python if not url.startswith(\"//\"): return redirect(url) ``` However, the following payload bypasses this logic: ``` \\\\evil.com ``` Flask/Werkzeug evaluates this as a safe relative path (`startswith(\"//\") == False`), while browsers normalize it to: ``` https://evil.com ``` and perform an external redirect. This normalization behavior is consistent across Chrome, Firefox, and Safari. As Flask does not provide a built-in redirect validation helper, developers routinely implement ad-hoc string checks that do not account for browser normalization rules, resulting in an ecosystem-wide class of open-redirect flaws. **Feature Request** Introduce an official, browser-aware redirect safety utility in Flask or Werkzeug, similar to Django’s `is_safe_url`, to standardize redirect validation across the framework. The helper should: 1. Normalize backslashes to forward slashes before validation. 2. Reject protocol-relative URLs (`//example.com`). 3. Optionally enforce allowed host checks. 4. Provide a documented, recommended pattern for safe redirects. **Rationale** - This issue is not a flaw in Flask’s redirect implementation but a recurring security footgun for developers due to inconsistent handling between application logic and browser URL normalization. - Providing an official helper reduces the likelihood of open-redirect vulnerabilities in applications built on Flask. - This is framework hardening rather than a security bug report, and it aligns with the expectations set by other frameworks that offer standardized redirect-safety utilities. This feature would give developers a reliable and recommended approach to validating redirect targets securely, reducing reliance on fragile custom logic.",
+      "meta": {
+        "state": "closed",
+        "labels": [],
+        "assignees": []
+      }
+    },
+    {
+      "artifact_id": "issue:5933:comment:3939168923",
+      "artifact_type": "comment",
+      "repo": "pallets/flask",
+      "issue_number": 5933,
+      "source_id": "3939168923",
+      "source_url": "https://github.com/pallets/flask/issues/5933#issuecomment-3939168923",
+      "author": "davidism",
+      "created_at": "2026-02-21T17:55:11Z",
+      "updated_at": "2026-02-21T17:55:11Z",
+      "text": "Do not use LLMs to generate output at us. > A common pattern used by Flask developers to prevent protocol-relative redirects is: I don't see anything about that mentioned in our docs or examples. > However, the following payload bypasses this logic: No it doesn't. `redirect(\"\\\\example.com\")` results in an error in my browser, not a redirect to `example.com`. `\"http:\\\\example.com\"` doesn't work either.",
+      "meta": {}
+    },
+    {
+      "artifact_id": "issue:5933:event:22970489988",
+      "artifact_type": "event",
+      "repo": "pallets/flask",
+      "issue_number": 5933,
+      "source_id": "22970489988",
+      "source_url": "https://github.com/pallets/flask/issues/5933",
+      "author": "davidism",
+      "created_at": "2026-02-21T17:55:11Z",
+      "updated_at": "2026-02-21T17:55:11Z",
+      "text": "Issue was closed by @davidism.",
+      "meta": {
+        "event": "closed",
+        "assignee": null,
+        "label": null
+      }
+    },
+    {
+      "artifact_id": "issue:5933:event:22970493326",
+      "artifact_type": "event",
+      "repo": "pallets/flask",
+      "issue_number": 5933,
+      "source_id": "22970493326",
+      "source_url": "https://github.com/pallets/flask/issues/5933",
+      "author": "pallets",
+      "created_at": "2026-02-21T17:55:42Z",
+      "updated_at": "2026-02-21T17:55:42Z",
+      "text": "Event 'user_blocked' by @pallets.",
+      "meta": {
+        "event": "user_blocked",
+        "assignee": null,
+        "label": null
+      }
+    },
+    {
+      "artifact_id": "issue:5933:event:23365889793",
+      "artifact_type": "event",
+      "repo": "pallets/flask",
+      "issue_number": 5933,
+      "source_id": "23365889793",
+      "source_url": "https://github.com/pallets/flask/issues/5933",
+      "author": "github-actions[bot]",
+      "created_at": "2026-03-08T00:12:39Z",
+      "updated_at": "2026-03-08T00:12:39Z",
+      "text": "Event 'locked' by @github-actions[bot].",
+      "meta": {
+        "event": "locked",
+        "assignee": null,
+        "label": null
+      }
+    },
+    {
+      "artifact_id": "issue:5929:body",
+      "artifact_type": "issue_body",
+      "repo": "pallets/flask",
+      "issue_number": 5929,
+      "source_id": "3971741827",
+      "source_url": "https://github.com/pallets/flask/issues/5929",
+      "author": "rootvector2",
+      "created_at": "2026-02-21T09:35:57Z",
+      "updated_at": "2026-03-08T00:12:39Z",
+      "text": ". .",
+      "meta": {
+        "state": "closed",
+        "labels": [],
+        "assignees": []
+      }
+    },
+    {
+      "artifact_id": "issue:5929:event:22969265814",
+      "artifact_type": "event",
+      "repo": "pallets/flask",
+      "issue_number": 5929,
+      "source_id": "22969265814",
+      "source_url": "https://github.com/pallets/flask/issues/5929",
+      "author": "pallets",
+      "created_at": "2026-02-21T15:10:10Z",
+      "updated_at": "2026-02-21T15:10:10Z",
+      "text": "Event 'user_blocked' by @pallets.",
+      "meta": {
+        "event": "user_blocked",
+        "assignee": null,
+        "label": null
+      }
+    },
+    {
+      "artifact_id": "issue:5929:event:22969277442",
+      "artifact_type": "event",
+      "repo": "pallets/flask",
+      "issue_number": 5929,
+      "source_id": "22969277442",
+      "source_url": "https://github.com/pallets/flask/issues/5929",
+      "author": "davidism",
+      "created_at": "2026-02-21T15:11:49Z",
+      "updated_at": "2026-02-21T15:11:49Z",
+      "text": "Issue was closed by @davidism.",
+      "meta": {
+        "event": "closed",
+        "assignee": null,
+        "label": null
+      }
+    },
+    {
+      "artifact_id": "issue:5929:event:23365889873",
+      "artifact_type": "event",
+      "repo": "pallets/flask",
+      "issue_number": 5929,
+      "source_id": "23365889873",
+      "source_url": "https://github.com/pallets/flask/issues/5929",
+      "author": "github-actions[bot]",
+      "created_at": "2026-03-08T00:12:39Z",
+      "updated_at": "2026-03-08T00:12:39Z",
+      "text": "Event 'locked' by @github-actions[bot].",
+      "meta": {
+        "event": "locked",
+        "assignee": null,
+        "label": null
+      }
+    },
+    {
+      "artifact_id": "issue:5934:body",
+      "artifact_type": "issue_body",
+      "repo": "pallets/flask",
+      "issue_number": 5934,
+      "source_id": "3972836402",
+      "source_url": "https://github.com/pallets/flask/issues/5934",
+      "author": "uwezkhan",
+      "created_at": "2026-02-21T21:16:02Z",
+      "updated_at": "2026-03-08T00:12:37Z",
+      "text": "[Security] Default session HMAC digest should be SHA-256, not SHA-1 ## Summary Flask's `SecureCookieSessionInterface` uses SHA-1 as the default HMAC digest for signing session cookies. SHA-1 has been deprecated by NIST (since 2011) and is no longer recommended for cryptographic use. ## Location `src/flask/sessions.py`, line 293: ```python digest_method = staticmethod(_lazy_sha1)",
+      "meta": {
+        "state": "closed",
+        "labels": [],
+        "assignees": []
+      }
+    },
+    {
+      "artifact_id": "issue:5934:event:22972823354",
+      "artifact_type": "event",
+      "repo": "pallets/flask",
+      "issue_number": 5934,
+      "source_id": "22972823354",
+      "source_url": "https://github.com/pallets/flask/issues/5934",
+      "author": "davidism",
+      "created_at": "2026-02-21T21:27:24Z",
+      "updated_at": "2026-02-21T21:27:24Z",
+      "text": "Issue was closed by @davidism.",
+      "meta": {
+        "event": "closed",
+        "assignee": null,
+        "label": null
+      }
+    },
+    {
+      "artifact_id": "issue:5934:event:22973031745",
+      "artifact_type": "event",
+      "repo": "pallets/flask",
+      "issue_number": 5934,
+      "source_id": "22973031745",
+      "source_url": "https://github.com/pallets/flask/issues/5934",
+      "author": "pallets",
+      "created_at": "2026-02-21T21:49:57Z",
+      "updated_at": "2026-02-21T21:49:57Z",
+      "text": "Event 'user_blocked' by @pallets.",
+      "meta": {
+        "event": "user_blocked",
+        "assignee": null,
+        "label": null
+      }
+    },
+    {
+      "artifact_id": "issue:5934:event:23365889648",
+      "artifact_type": "event",
+      "repo": "pallets/flask",
+      "issue_number": 5934,
+      "source_id": "23365889648",
+      "source_url": "https://github.com/pallets/flask/issues/5934",
+      "author": "github-actions[bot]",
+      "created_at": "2026-03-08T00:12:37Z",
+      "updated_at": "2026-03-08T00:12:37Z",
+      "text": "Event 'locked' by @github-actions[bot].",
+      "meta": {
+        "event": "locked",
+        "assignee": null,
+        "label": null
+      }
+    },
+    {
+      "artifact_id": "issue:5942:body",
+      "artifact_type": "issue_body",
+      "repo": "pallets/flask",
+      "issue_number": 5942,
+      "source_id": "4035256126",
+      "source_url": "https://github.com/pallets/flask/issues/5942",
+      "author": "thoughtsunificator",
+      "created_at": "2026-03-06T17:11:48Z",
+      "updated_at": "2026-03-06T20:58:40Z",
+      "text": "flask run should support pep723 Because no one wants to use: native pkgutil-style, declarative, non-declarative, setup.py, setup.cfg, pyproject.toml, pep517, setuptools, build, pip, namespace packages, normal packages, pkg-util namespace package You name it because I won't. Having `flask run` or any such primitive commands to allow running a flask application would make the entire process go from a 2 weeks pip marathon to a 10 minutes max of relaxing time where it just works magically.",
+      "meta": {
+        "state": "closed",
+        "labels": [],
+        "assignees": []
+      }
+    },
+    {
+      "artifact_id": "issue:5942:comment:4013801523",
+      "artifact_type": "comment",
+      "repo": "pallets/flask",
+      "issue_number": 5942,
+      "source_id": "4013801523",
+      "source_url": "https://github.com/pallets/flask/issues/5942#issuecomment-4013801523",
+      "author": "davidism",
+      "created_at": "2026-03-06T19:50:53Z",
+      "updated_at": "2026-03-06T19:50:53Z",
+      "text": "The `flask run` command starts the development server. As it says throughout the docs and in the terminal: > This is a development server. Do not use it in a production deployment. Use a production WSGI server instead. If you're distributing an application for others to run, even if it's a single file Flask application, that's production, not development. Therefore, `flask run` should not be used in that scenario. You'd want to do, for example, `gunicorn example:app` instead. Or you'd want to distribute a Docker image, pyinstaller, etc that is configured with the proper dependencies and commands. --- All that said, this is a feature for installation or project management tools. Flask is not an installation or project management tool, it's a web framework. This already works without any changes to Flask (or Gunicorn or another production server) by using `uvx` or similar tools. ```python # /// script # requires-python = \">=3.14\" # dependencies = [ # \"flask>=3.1.3\", # \"gunicorn>=25.1.0\", # ] # /// from flask import Flask app = Flask(__name__) @app.get(\"/\") def download(): return \"Hello, World!\" ``` ``` uvx --with-requirements example.py flask -A example run ``` ``` uvx --with-requirements example.py gunicorn example:app ```",
+      "meta": {}
+    },
+    {
+      "artifact_id": "issue:5942:comment:4014014152",
+      "artifact_type": "comment",
+      "repo": "pallets/flask",
+      "issue_number": 5942,
+      "source_id": "4014014152",
+      "source_url": "https://github.com/pallets/flask/issues/5942#issuecomment-4014014152",
+      "author": "thoughtsunificator",
+      "created_at": "2026-03-06T20:39:58Z",
+      "updated_at": "2026-03-06T20:39:58Z",
+      "text": "What does simply running flask without having to carry the heavy weight of a centurion of non-sense stack that is setuptools. If anyone sincerely believes that these issues will simply go away, someone will eventually take care of them, well nope, you're just making things harder and harder by refusing to solve the problems at a lower level, which in this case is the promise of running flask applications as-is without going through the HELL that is pip or anything else for that matter. The path to running a flask application is hard and it should not be. PEP723 offers a basic solution that takes care, in the most simplest of forms, of dependencies. No external tools, no assumptions made about howe much time you're willing to spend figuring it all out. It just works because the real dependency management infrastructure is taking care of it in a standardized way. You probably have no idea on how many ways there is to \"install\" a flask application, and if we add the number of ways to \"distribute\" said applications - let's say it's a lot. On Fri, Mar 06, 2026 at 11:51:15AM -0800, David Lord wrote: > davidism left a comment (pallets/flask#5942) > > The `flask run` command starts the development server. As it says throughout the docs and in the terminal: > > > This is a development server. Do not use it in a production deployment. Use a production WSGI server instead. > > If you're distributing an application for others to run, even if it's a single file Flask application, that's production, not development. Therefore, `flask run` should not be used in that scenario. You'd want to do, for example, `gunicorn example:app` instead. Or you'd want to distribute a Docker image, pyinstaller, etc that is configured with the proper dependencies and commands. > > --- > > All that said, this is a feature for installation or project management tools. Flask is not an installation or project management tool, it's a web framework. This already works without any changes to Flask (or Gunicorn or another production server) by using `uvx` or similar tools. > > ```python > # /// script > # requires-python = \">=3.14\" > # dependencies = [ > # \"flask>=3.1.3\", > # \"gunicorn>=25.1.0\", > # ] > # /// > from flask import Flask > > app = Flask(__name__) > > @app.get(\"/\") > def download(): > return \"Hello, World!\" > ``` > > ``` > uvx --with-requirements example.py flask -A example run > ``` > > ``` > uvx --with-requirements example.py gunicorn example:app > ``` > > -- > Reply to this email directly or view it on GitHub: > https://github.com/pallets/flask/issues/5942#issuecomment-4013801523 > You are receiving this because you authored the thread. > > Message ID: ***@***.***>",
+      "meta": {}
+    },
+    {
+      "artifact_id": "issue:5942:comment:4014025944",
+      "artifact_type": "comment",
+      "repo": "pallets/flask",
+      "issue_number": 5942,
+      "source_id": "4014025944",
+      "source_url": "https://github.com/pallets/flask/issues/5942#issuecomment-4014025944",
+      "author": "ThiefMaster",
+      "created_at": "2026-03-06T20:42:09Z",
+      "updated_at": "2026-03-06T20:42:09Z",
+      "text": "Frankly I'm not even sure WTH you are asking for (in a rather rude way by the way).",
+      "meta": {}
+    },
+    {
+      "artifact_id": "issue:5942:comment:4014111866",
+      "artifact_type": "comment",
+      "repo": "pallets/flask",
+      "issue_number": 5942,
+      "source_id": "4014111866",
+      "source_url": "https://github.com/pallets/flask/issues/5942#issuecomment-4014111866",
+      "author": "davidism",
+      "created_at": "2026-03-06T20:57:36Z",
+      "updated_at": "2026-03-06T20:57:36Z",
+      "text": "I have absolutely no idea what you're talking about now. You're clearly frustrated, but I think that may be due to your own misunderstandings as well. As I showed, it's completely possible to use inline script metadata already, no change to Flask needed.",
+      "meta": {}
+    },
+    {
+      "artifact_id": "issue:5942:event:23342942473",
+      "artifact_type": "event",
+      "repo": "pallets/flask",
+      "issue_number": 5942,
+      "source_id": "23342942473",
+      "source_url": "https://github.com/pallets/flask/issues/5942",
+      "author": "davidism",
+      "created_at": "2026-03-06T19:50:53Z",
+      "updated_at": "2026-03-06T19:50:53Z",
+      "text": "Issue was closed by @davidism.",
+      "meta": {
+        "event": "closed",
+        "assignee": null,
+        "label": null
+      }
+    },
+    {
+      "artifact_id": "issue:5942:event:23344431123",
+      "artifact_type": "event",
+      "repo": "pallets/flask",
+      "issue_number": 5942,
+      "source_id": "23344431123",
+      "source_url": "https://github.com/pallets/flask/issues/5942",
+      "author": "pallets",
+      "created_at": "2026-03-06T20:58:00Z",
+      "updated_at": "2026-03-06T20:58:00Z",
+      "text": "Event 'user_blocked' by @pallets.",
+      "meta": {
+        "event": "user_blocked",
+        "assignee": null,
+        "label": null
+      }
+    },
+    {
+      "artifact_id": "issue:5942:event:23344449373",
+      "artifact_type": "event",
+      "repo": "pallets/flask",
+      "issue_number": 5942,
+      "source_id": "23344449373",
+      "source_url": "https://github.com/pallets/flask/issues/5942",
+      "author": "pallets",
+      "created_at": "2026-03-06T20:58:40Z",
+      "updated_at": "2026-03-06T20:58:40Z",
+      "text": "Event 'locked' by @pallets.",
+      "meta": {
+        "event": "locked",
+        "assignee": null,
+        "label": null
+      }
+    },
+    {
+      "artifact_id": "issue:5919:body",
+      "artifact_type": "issue_body",
+      "repo": "pallets/flask",
+      "issue_number": 5919,
+      "source_id": "3935874237",
+      "source_url": "https://github.com/pallets/flask/issues/5919",
+      "author": "devagarwal847-code",
+      "created_at": "2026-02-13T07:54:34Z",
+      "updated_at": "2026-02-28T00:10:43Z",
+      "text": "llm junk LLM junk removed",
+      "meta": {
+        "state": "closed",
+        "labels": [],
+        "assignees": []
+      }
+    },
+    {
+      "artifact_id": "issue:5919:comment:3895476391",
+      "artifact_type": "comment",
+      "repo": "pallets/flask",
+      "issue_number": 5919,
+      "source_id": "3895476391",
+      "source_url": "https://github.com/pallets/flask/issues/5919#issuecomment-3895476391",
+      "author": "ThiefMaster",
+      "created_at": "2026-02-13T08:00:30Z",
+      "updated_at": "2026-02-13T08:00:30Z",
+      "text": "don't dump LLM output on us",
+      "meta": {}
+    },
+    {
+      "artifact_id": "issue:5919:event:22758696783",
+      "artifact_type": "event",
+      "repo": "pallets/flask",
+      "issue_number": 5919,
+      "source_id": "22758696783",
+      "source_url": "https://github.com/pallets/flask/issues/5919",
+      "author": "Inject",
+      "created_at": "2026-02-13T07:54:36Z",
+      "updated_at": "2026-02-13T07:54:36Z",
+      "text": "Event 'mentioned' by @Inject.",
+      "meta": {
+        "event": "mentioned",
+        "assignee": null,
+        "label": null
+      }
+    },
+    {
+      "artifact_id": "issue:5919:event:22758696796",
+      "artifact_type": "event",
+      "repo": "pallets/flask",
+      "issue_number": 5919,
+      "source_id": "22758696796",
+      "source_url": "https://github.com/pallets/flask/issues/5919",
+      "author": "Inject",
+      "created_at": "2026-02-13T07:54:36Z",
+      "updated_at": "2026-02-13T07:54:36Z",
+      "text": "Event 'subscribed' by @Inject.",
+      "meta": {
+        "event": "subscribed",
+        "assignee": null,
+        "label": null
+      }
+    },
+    {
+      "artifact_id": "issue:5919:event:22758801915",
+      "artifact_type": "event",
+      "repo": "pallets/flask",
+      "issue_number": 5919,
+      "source_id": "22758801915",
+      "source_url": "https://github.com/pallets/flask/issues/5919",
+      "author": "ThiefMaster",
+      "created_at": "2026-02-13T08:00:31Z",
+      "updated_at": "2026-02-13T08:00:31Z",
+      "text": "Issue was closed by @ThiefMaster.",
+      "meta": {
+        "event": "closed",
+        "assignee": null,
+        "label": null
+      }
+    },
+    {
+      "artifact_id": "issue:5919:event:22769081054",
+      "artifact_type": "event",
+      "repo": "pallets/flask",
+      "issue_number": 5919,
+      "source_id": "22769081054",
+      "source_url": "https://github.com/pallets/flask/issues/5919",
+      "author": "pallets",
+      "created_at": "2026-02-13T15:02:48Z",
+      "updated_at": "2026-02-13T15:02:48Z",
+      "text": "Event 'user_blocked' by @pallets.",
+      "meta": {
+        "event": "user_blocked",
+        "assignee": null,
+        "label": null
+      }
+    },
+    {
+      "artifact_id": "issue:5919:event:22780210570",
+      "artifact_type": "event",
+      "repo": "pallets/flask",
+      "issue_number": 5919,
+      "source_id": "22780210570",
+      "source_url": "https://github.com/pallets/flask/issues/5919",
+      "author": "davidism",
+      "created_at": "2026-02-13T22:23:39Z",
+      "updated_at": "2026-02-13T22:23:39Z",
+      "text": "Issue title renamed from 'Flask Built-in Dependency Injection' to 'llm junk' by @davidism.",
+      "meta": {
+        "event": "renamed",
+        "assignee": null,
+        "label": null
+      }
+    },
+    {
+      "artifact_id": "issue:5919:event:22780212329",
+      "artifact_type": "event",
+      "repo": "pallets/flask",
+      "issue_number": 5919,
+      "source_id": "22780212329",
+      "source_url": "https://github.com/pallets/flask/issues/5919",
+      "author": "Inject",
+      "created_at": "2026-02-13T22:23:43Z",
+      "updated_at": "2026-02-13T22:23:43Z",
+      "text": "Event 'unsubscribed' by @Inject.",
+      "meta": {
+        "event": "unsubscribed",
+        "assignee": null,
+        "label": null
+      }
+    },
+    {
+      "artifact_id": "issue:5919:event:23150180826",
+      "artifact_type": "event",
+      "repo": "pallets/flask",
+      "issue_number": 5919,
+      "source_id": "23150180826",
+      "source_url": "https://github.com/pallets/flask/issues/5919",
+      "author": "github-actions[bot]",
+      "created_at": "2026-02-28T00:10:43Z",
+      "updated_at": "2026-02-28T00:10:43Z",
+      "text": "Event 'locked' by @github-actions[bot].",
+      "meta": {
+        "event": "locked",
+        "assignee": null,
+        "label": null
+      }
+    },
+    {
+      "artifact_id": "issue:5916:body",
+      "artifact_type": "issue_body",
+      "repo": "pallets/flask",
+      "issue_number": 5916,
+      "source_id": "3933890523",
+      "source_url": "https://github.com/pallets/flask/issues/5916",
+      "author": "davidism",
+      "created_at": "2026-02-12T20:32:21Z",
+      "updated_at": "2026-02-27T00:14:18Z",
+      "text": "`provide_automatic_options` is weird While dealing with trying to detect duplicate routes in https://github.com/pallets/werkzeug/issues/3105, I ran into an issue with Flask, which adds `OPTIONS` to every single rule by default. I started looking into Flask's `provide_automatic_options` feature, and it's just weird. - Why is there a `PROVIDE_AUTOMATIC_OPTIONS` config? What benefit is there to turning `OPTIONS` off at all, let alone configuring it for a given deployment. - Flask adds `OPTIONS` to every route, then has a check that runs on dispatching _every_ request to see if the method was `OPTIONS` and `provide_automatic_options` was enabled for the rule. Performing this check for every request seems wasteful, as opposed to adding an actual rule and endpoint so that the routing that's already happening handles it. - But adding a rule is also sort of bad, as it results in a bunch of duplicate rules since Flask has no way to know what other rules have already been added. This can be caught with Werkzeug 3.2, and doesn't cause problems in earlier versions, but it's still annoying. - `provide_automatic_options` can be set as an attribute on the view function. There are some other attributes that are barely documented as well, such as `required_methods`. This is presumably mostly for `View` classes, but works on functions too, making type annotations unhelpful. - If `PROVIDE_AUTOMATIC_OPTIONS` is disabled (not the default), the logic for the `provide_automatic_options` argument and attribute doesn't work correctly to _enable_ it, it only works for _disabling_. - The tests for this were incomplete and had some issues. Some other tests were revealed to be adding duplicate rules as well. At a minimum I've fixed the enabling issue. I've also got a change that registers a route and view for options instead of using special dispatch logic. We should also consider deprecating the config.",
+      "meta": {
+        "state": "closed",
+        "labels": [],
+        "assignees": [
+          "davidism"
+        ]
+      }
+    },
+    {
+      "artifact_id": "issue:5916:comment:3893338342",
+      "artifact_type": "comment",
+      "repo": "pallets/flask",
+      "issue_number": 5916,
+      "source_id": "3893338342",
+      "source_url": "https://github.com/pallets/flask/issues/5916#issuecomment-3893338342",
+      "author": "davidism",
+      "created_at": "2026-02-12T20:54:58Z",
+      "updated_at": "2026-02-12T20:54:58Z",
+      "text": "The config was actually added quite recently, and it turns out we already had the discussion about whether the config made sense https://github.com/pallets/flask/pull/5496",
+      "meta": {}
+    },
+    {
+      "artifact_id": "issue:5916:event:22747252829",
+      "artifact_type": "event",
+      "repo": "pallets/flask",
+      "issue_number": 5916,
+      "source_id": "22747252829",
+      "source_url": "https://github.com/pallets/flask/issues/5916",
+      "author": "davidism",
+      "created_at": "2026-02-12T20:32:22Z",
+      "updated_at": "2026-02-12T20:32:22Z",
+      "text": "Event 'milestoned' by @davidism.",
+      "meta": {
+        "event": "milestoned",
+        "assignee": null,
+        "label": null
+      }
+    },
+    {
+      "artifact_id": "issue:5916:event:22747252910",
+      "artifact_type": "event",
+      "repo": "pallets/flask",
+      "issue_number": 5916,
+      "source_id": "22747252910",
+      "source_url": "https://github.com/pallets/flask/issues/5916",
+      "author": "davidism",
+      "created_at": "2026-02-12T20:32:22Z",
+      "updated_at": "2026-02-12T20:32:22Z",
+      "text": "Issue was assigned @davidism by @davidism.",
+      "meta": {
+        "event": "assigned",
+        "assignee": "davidism",
+        "label": null
+      }
+    },
+    {
+      "artifact_id": "issue:5916:event:22748081633",
+      "artifact_type": "event",
+      "repo": "pallets/flask",
+      "issue_number": 5916,
+      "source_id": "22748081633",
+      "source_url": "https://github.com/pallets/flask/issues/5916",
+      "author": "davidism",
+      "created_at": "2026-02-12T21:07:52Z",
+      "updated_at": "2026-02-12T21:07:52Z",
+      "text": "Issue was closed by @davidism.",
+      "meta": {
+        "event": "closed",
+        "assignee": null,
+        "label": null
+      }
+    },
+    {
+      "artifact_id": "issue:5916:event:23120763980",
+      "artifact_type": "event",
+      "repo": "pallets/flask",
+      "issue_number": 5916,
+      "source_id": "23120763980",
+      "source_url": "https://github.com/pallets/flask/issues/5916",
+      "author": "github-actions[bot]",
+      "created_at": "2026-02-27T00:14:18Z",
+      "updated_at": "2026-02-27T00:14:18Z",
+      "text": "Event 'locked' by @github-actions[bot].",
+      "meta": {
+        "event": "locked",
+        "assignee": null,
+        "label": null
+      }
+    },
+    {
+      "artifact_id": "issue:5915:body",
+      "artifact_type": "issue_body",
+      "repo": "pallets/flask",
+      "issue_number": 5915,
+      "source_id": "3928944031",
+      "source_url": "https://github.com/pallets/flask/issues/5915",
+      "author": "vladko312",
+      "created_at": "2026-02-11T22:24:21Z",
+      "updated_at": "2026-02-26T00:11:53Z",
+      "text": "Support for all methods in @app.route By default, `@app.route` sets `methods` to support only `GET` requests and the [documentation](https://flask.palletsprojects.com/en/stable/api/#flask.Flask.route) suggests that the parameters are then passed to `Rule`, where `methods=None` allows all methods to be used. In reality, even explicit `None` is treated as a default value and gets overwritten by `[\"GET\"]`. I suggest adding a way to allow all methods by explicitly passing `None`. This feature would allow more direct control over `Rule` parameters when using `@app.route`, only using defaults when no value was provided. It is currently possible to work around the issue by creating the `Rule` directly, but it would be more convinient to have that option with `@app.route` decorators. It would also remove some confusion, as `None` being treated the same way as no value by `@app.route` while having a special meaning in `Rule` seems like a bug.",
+      "meta": {
+        "state": "closed",
+        "labels": [],
+        "assignees": []
+      }
+    },
+    {
+      "artifact_id": "issue:5915:comment:3887655748",
+      "artifact_type": "comment",
+      "repo": "pallets/flask",
+      "issue_number": 5915,
+      "source_id": "3887655748",
+      "source_url": "https://github.com/pallets/flask/issues/5915#issuecomment-3887655748",
+      "author": "davidism",
+      "created_at": "2026-02-11T22:47:07Z",
+      "updated_at": "2026-02-11T22:47:53Z",
+      "text": "Unlike Werkzeug, Flask has a more structured approach to routes and endpoints. I'm currently dealing with routing stuff right now, and do not want to surface more of these options in Flask. Adding more options that change behavior on \"not provided\" vs \"none\" makes things more confusing to annotate and implement and reason about. As you say, if you need this feature it's still possible to use, as Werkzeug's entire routing system is still available. ```python def add_url_rule(app, rule, endpoint=None, view_func=None, **kwargs): if endpoint is None: endpoint = view_func.__name__ app.url_map.add(app.url_rule_class(*args, endpoint=endpoint, **kwargs)) if view_func is not None: app.view_funcs[endpoint] = view_func ``` You can also register it the normal way with `@app.route`, then remove the methods: ```python for rule in app.url_map.iter_rules(endpoint): rule.methods = None ```",
+      "meta": {}
+    },
+    {
+      "artifact_id": "issue:5915:comment:3887763304",
+      "artifact_type": "comment",
+      "repo": "pallets/flask",
+      "issue_number": 5915,
+      "source_id": "3887763304",
+      "source_url": "https://github.com/pallets/flask/issues/5915#issuecomment-3887763304",
+      "author": "vladko312",
+      "created_at": "2026-02-11T23:14:36Z",
+      "updated_at": "2026-02-11T23:14:36Z",
+      "text": "> Adding more options that change behavior on \"not provided\" vs \"none\" makes things more confusing to annotate and implement and reason about. In that case, it might be helpful to add a line to the documentation that would make it clear that `None` in `@app.route` is treated as default value and is not passed to `Rule`.",
+      "meta": {}
+    },
+    {
+      "artifact_id": "issue:5915:event:22718620622",
+      "artifact_type": "event",
+      "repo": "pallets/flask",
+      "issue_number": 5915,
+      "source_id": "22718620622",
+      "source_url": "https://github.com/pallets/flask/issues/5915",
+      "author": "davidism",
+      "created_at": "2026-02-11T22:47:08Z",
+      "updated_at": "2026-02-11T22:47:08Z",
+      "text": "Issue was closed by @davidism.",
+      "meta": {
+        "event": "closed",
+        "assignee": null,
+        "label": null
+      }
+    },
+    {
+      "artifact_id": "issue:5915:event:23085929061",
+      "artifact_type": "event",
+      "repo": "pallets/flask",
+      "issue_number": 5915,
+      "source_id": "23085929061",
+      "source_url": "https://github.com/pallets/flask/issues/5915",
+      "author": "github-actions[bot]",
+      "created_at": "2026-02-26T00:11:53Z",
+      "updated_at": "2026-02-26T00:11:53Z",
+      "text": "Event 'locked' by @github-actions[bot].",
+      "meta": {
+        "event": "locked",
+        "assignee": null,
+        "label": null
+      }
+    },
+    {
+      "artifact_id": "issue:5936:body",
+      "artifact_type": "issue_body",
+      "repo": "pallets/flask",
+      "issue_number": 5936,
+      "source_id": "3980888493",
+      "source_url": "https://github.com/pallets/flask/issues/5936",
+      "author": "adenbad",
+      "created_at": "2026-02-24T00:54:46Z",
+      "updated_at": "2026-02-24T00:57:37Z",
+      "text": "Clarify recommended debug workflow in Quickstart documentation While reviewing the Quickstart documentation (https://flask.palletsprojects.com/en/stable/quickstart/#debug-mode), I noticed that debug mode is discussed but the distinction between using `app.run(debug=True)` and the recommended `flask run --debug` CLI flag is not clearly emphasized. Many external tutorials still reference `app.run(debug=True)`, and new users may not understand when to use the CLI flag versus enabling debug mode directly in application code. It may be helpful to clarify: - That `flask run --debug` is the recommended development workflow - When `app.run(debug=True)` is appropriate - Why separating debug configuration from application code is considered best practice",
+      "meta": {
+        "state": "closed",
+        "labels": [],
+        "assignees": []
+      }
+    },
+    {
+      "artifact_id": "issue:5936:comment:3948250006",
+      "artifact_type": "comment",
+      "repo": "pallets/flask",
+      "issue_number": 5936,
+      "source_id": "3948250006",
+      "source_url": "https://github.com/pallets/flask/issues/5936#issuecomment-3948250006",
+      "author": "davidism",
+      "created_at": "2026-02-24T00:57:37Z",
+      "updated_at": "2026-02-24T00:57:37Z",
+      "text": "Seems pretty clear to me. The quickstart recommends `flask --debug`. Then it links to more information about the debugger.",
+      "meta": {}
+    },
+    {
+      "artifact_id": "issue:5936:event:23018006399",
+      "artifact_type": "event",
+      "repo": "pallets/flask",
+      "issue_number": 5936,
+      "source_id": "23018006399",
+      "source_url": "https://github.com/pallets/flask/issues/5936",
+      "author": "davidism",
+      "created_at": "2026-02-24T00:57:37Z",
+      "updated_at": "2026-02-24T00:57:37Z",
+      "text": "Issue was closed by @davidism.",
+      "meta": {
+        "event": "closed",
+        "assignee": null,
+        "label": null
+      }
+    },
+    {
+      "artifact_id": "issue:5912:body",
+      "artifact_type": "issue_body",
+      "repo": "pallets/flask",
+      "issue_number": 5912,
+      "source_id": "3913760490",
+      "source_url": "https://github.com/pallets/flask/issues/5912",
+      "author": "veeceey",
+      "created_at": "2026-02-08T23:01:53Z",
+      "updated_at": "2026-02-24T00:13:08Z",
+      "text": "Config.from_file() missing ENOTDIR in silent error handling ## Description `Config.from_file()` is missing `errno.ENOTDIR` in its silent error handling, while `Config.from_pyfile()` correctly includes it. In `from_pyfile` (line ~193): ```python if silent and e.errno in (errno.ENOENT, errno.EISDIR, errno.ENOTDIR): ``` In `from_file` (line ~239): ```python if silent and e.errno in (errno.ENOENT, errno.EISDIR): ``` The `ENOTDIR` case was added to `from_pyfile` in PR #2581 (fixing issue #2545), but the fix was never applied to `from_json` (now `from_file`), even though the original issue title mentioned \"from_json, etc.\" ## Reproduction When a component of the config file path is a regular file rather than a directory (e.g., `~/.myapp` is a file, and you try to load `~/.myapp/config.toml`), `from_file()` with `silent=True` raises `OSError` with `errno.ENOTDIR` instead of silently returning `False`. ```python import flask import tomllib app = flask.Flask(__name__) # If ~/.myapp is a regular file, this raises instead of returning False app.config.from_file(\"~/.myapp/config.toml\", load=tomllib.load, text=False, silent=True) ``` ## Expected Behavior `from_file(..., silent=True)` should return `False` when a path component is not a directory, matching the behavior of `from_pyfile(..., silent=True)`. ## Environment - Flask version: 3.1.x / main branch",
+      "meta": {
+        "state": "closed",
+        "labels": [],
+        "assignees": []
+      }
+    },
+    {
+      "artifact_id": "issue:5912:event:22628848995",
+      "artifact_type": "event",
+      "repo": "pallets/flask",
+      "issue_number": 5912,
+      "source_id": "22628848995",
+      "source_url": "https://github.com/pallets/flask/issues/5912",
+      "author": "pallets",
+      "created_at": "2026-02-08T23:25:58Z",
+      "updated_at": "2026-02-08T23:25:58Z",
+      "text": "Event 'user_blocked' by @pallets.",
+      "meta": {
+        "event": "user_blocked",
+        "assignee": null,
+        "label": null
+      }
+    },
+    {
+      "artifact_id": "issue:5912:event:22631788778",
+      "artifact_type": "event",
+      "repo": "pallets/flask",
+      "issue_number": 5912,
+      "source_id": "22631788778",
+      "source_url": "https://github.com/pallets/flask/issues/5912",
+      "author": "davidism",
+      "created_at": "2026-02-09T03:59:02Z",
+      "updated_at": "2026-02-09T03:59:02Z",
+      "text": "Issue was closed by @davidism.",
+      "meta": {
+        "event": "closed",
+        "assignee": null,
+        "label": null
+      }
+    },
+    {
+      "artifact_id": "issue:5912:event:23017251456",
+      "artifact_type": "event",
+      "repo": "pallets/flask",
+      "issue_number": 5912,
+      "source_id": "23017251456",
+      "source_url": "https://github.com/pallets/flask/issues/5912",
+      "author": "github-actions[bot]",
+      "created_at": "2026-02-24T00:13:08Z",
+      "updated_at": "2026-02-24T00:13:08Z",
+      "text": "Event 'locked' by @github-actions[bot].",
+      "meta": {
+        "event": "locked",
+        "assignee": null,
+        "label": null
+      }
+    },
+    {
+      "artifact_id": "issue:5912:event:23070985170",
+      "artifact_type": "event",
+      "repo": "pallets/flask",
+      "issue_number": 5912,
+      "source_id": "23070985170",
+      "source_url": "https://github.com/pallets/flask/issues/5912",
+      "author": "webknjaz",
+      "created_at": "2026-02-25T14:48:36Z",
+      "updated_at": "2026-02-25T14:48:36Z",
+      "text": "Event 'project_v2_item_status_changed' by @webknjaz.",
+      "meta": {
+        "event": "project_v2_item_status_changed",
+        "assignee": null,
+        "label": null
+      }
+    },
+    {
+      "artifact_id": "issue:5912:event:23070986595",
+      "artifact_type": "event",
+      "repo": "pallets/flask",
+      "issue_number": 5912,
+      "source_id": "23070986595",
+      "source_url": "https://github.com/pallets/flask/issues/5912",
+      "author": "webknjaz",
+      "created_at": "2026-02-25T14:48:36Z",
+      "updated_at": "2026-02-25T14:48:36Z",
+      "text": "Event 'added_to_project_v2' by @webknjaz.",
+      "meta": {
+        "event": "added_to_project_v2",
+        "assignee": null,
+        "label": null
+      }
+    },
+    {
+      "artifact_id": "issue:5912:event:23070986993",
+      "artifact_type": "event",
+      "repo": "pallets/flask",
+      "issue_number": 5912,
+      "source_id": "23070986993",
+      "source_url": "https://github.com/pallets/flask/issues/5912",
+      "author": "github-project-automation[bot]",
+      "created_at": "2026-02-25T14:48:37Z",
+      "updated_at": "2026-02-25T14:48:37Z",
+      "text": "Event 'project_v2_item_status_changed' by @github-project-automation[bot].",
+      "meta": {
+        "event": "project_v2_item_status_changed",
+        "assignee": null,
+        "label": null
+      }
+    },
+    {
+      "artifact_id": "issue:5912:event:23071294150",
+      "artifact_type": "event",
+      "repo": "pallets/flask",
+      "issue_number": 5912,
+      "source_id": "23071294150",
+      "source_url": "https://github.com/pallets/flask/issues/5912",
+      "author": "webknjaz",
+      "created_at": "2026-02-25T14:58:23Z",
+      "updated_at": "2026-02-25T14:58:23Z",
+      "text": "Event 'project_v2_item_status_changed' by @webknjaz.",
+      "meta": {
+        "event": "project_v2_item_status_changed",
+        "assignee": null,
+        "label": null
+      }
+    },
+    {
+      "artifact_id": "issue:5912:event:23352445253",
+      "artifact_type": "event",
+      "repo": "pallets/flask",
+      "issue_number": 5912,
+      "source_id": "23352445253",
+      "source_url": "https://github.com/pallets/flask/issues/5912",
+      "author": "github-project-automation[bot]",
+      "created_at": "2026-03-07T05:42:00Z",
+      "updated_at": "2026-03-07T05:42:00Z",
+      "text": "Event 'project_v2_item_status_changed' by @github-project-automation[bot].",
+      "meta": {
+        "event": "project_v2_item_status_changed",
+        "assignee": null,
+        "label": null
+      }
+    },
+    {
+      "artifact_id": "issue:5902:body",
+      "artifact_type": "issue_body",
+      "repo": "pallets/flask",
+      "issue_number": 5902,
+      "source_id": "3856206368",
+      "source_url": "https://github.com/pallets/flask/issues/5902",
+      "author": "MariamTak",
+      "created_at": "2026-01-26T14:27:03Z",
+      "updated_at": "2026-02-17T00:13:37Z",
+      "text": "Improve alt text for Debug Mode interactive debugger image (accessibility) In the Flask documentation section [“Debug Mode”](https://flask.palletsprojects.com/en/stable/quickstart/#debug-mode), there is an image demonstrating the interactive debugger with the following markup: ``` <img alt=\"The interactive debugger in action.\" class=\"screenshot align-center\" src=\"../_images/debugger.png\"> ``` The alt text is very generic and does not clearly describe the content or purpose of the image. For users who rely on screen readers, the current alt text does not convey that this is a Flask error page shown in the browser This makes the documentation less accessible for users with visual impairments and does not fully meet the intent of WCAG 1.1.1 (Non-text Content) **Suggested improvement** Replace the existing alt text with something more descriptive, for example: “Flask debug mode error page showing a Python traceback and an interactive debugger panel in the browser",
+      "meta": {
+        "state": "closed",
+        "labels": [],
+        "assignees": []
+      }
+    },
+    {
+      "artifact_id": "issue:5902:comment:3835562842",
+      "artifact_type": "comment",
+      "repo": "pallets/flask",
+      "issue_number": 5902,
+      "source_id": "3835562842",
+      "source_url": "https://github.com/pallets/flask/issues/5902#issuecomment-3835562842",
+      "author": "serinesefardjelah",
+      "created_at": "2026-02-02T14:45:31Z",
+      "updated_at": "2026-02-02T14:45:31Z",
+      "text": "Hello @davidism, Thank you for taking the time to review the issue, I understand that maintaining the project involves careful prioritization. I wanted to briefly highlight that this suggestion is motivated by accessibility considerations. There are developers who rely on assistive technologies such as screen readers or alternative navigation methods to work effectively. For them, even small accessibility-related details can have a significant impact on usability and inclusion. From that perspective, accessibility improvements aren’t just cosmetic; they help ensure that the project remains usable by a broader and more diverse developer community. This also aligns with long-term project quality and inclusiveness. I’m personally very interested in accessibility and would be happy to contribute if there’s a preferred approach or scope for such improvements within the project. Any guidance would be greatly appreciated. Thank you again for your work on the project and for considering this perspective.",
+      "meta": {}
+    },
+    {
+      "artifact_id": "issue:5902:event:22292211195",
+      "artifact_type": "event",
+      "repo": "pallets/flask",
+      "issue_number": 5902,
+      "source_id": "22292211195",
+      "source_url": "https://github.com/pallets/flask/issues/5902",
+      "author": "davidism",
+      "created_at": "2026-01-26T15:20:29Z",
+      "updated_at": "2026-01-26T15:20:29Z",
+      "text": "Issue was closed by @davidism.",
+      "meta": {
+        "event": "closed",
+        "assignee": null,
+        "label": null
+      }
+    },
+    {
+      "artifact_id": "issue:5902:event:22467998139",
+      "artifact_type": "event",
+      "repo": "pallets/flask",
+      "issue_number": 5902,
+      "source_id": "22467998139",
+      "source_url": "https://github.com/pallets/flask/issues/5902",
+      "author": "davidism",
+      "created_at": "2026-02-02T14:45:32Z",
+      "updated_at": "2026-02-02T14:45:32Z",
+      "text": "Event 'mentioned' by @davidism.",
+      "meta": {
+        "event": "mentioned",
+        "assignee": null,
+        "label": null
+      }
+    },
+    {
+      "artifact_id": "issue:5902:event:22467998172",
+      "artifact_type": "event",
+      "repo": "pallets/flask",
+      "issue_number": 5902,
+      "source_id": "22467998172",
+      "source_url": "https://github.com/pallets/flask/issues/5902",
+      "author": "davidism",
+      "created_at": "2026-02-02T14:45:32Z",
+      "updated_at": "2026-02-02T14:45:32Z",
+      "text": "Event 'subscribed' by @davidism.",
+      "meta": {
+        "event": "subscribed",
+        "assignee": null,
+        "label": null
+      }
+    },
+    {
+      "artifact_id": "issue:5902:event:22838378040",
+      "artifact_type": "event",
+      "repo": "pallets/flask",
+      "issue_number": 5902,
+      "source_id": "22838378040",
+      "source_url": "https://github.com/pallets/flask/issues/5902",
+      "author": "github-actions[bot]",
+      "created_at": "2026-02-17T00:13:37Z",
+      "updated_at": "2026-02-17T00:13:37Z",
+      "text": "Event 'locked' by @github-actions[bot].",
+      "meta": {
+        "event": "locked",
+        "assignee": null,
+        "label": null
+      }
+    },
+    {
+      "artifact_id": "issue:5907:body",
+      "artifact_type": "issue_body",
+      "repo": "pallets/flask",
+      "issue_number": 5907,
+      "source_id": "3880067115",
+      "source_url": "https://github.com/pallets/flask/issues/5907",
+      "author": "jnvw",
+      "created_at": "2026-01-31T20:50:02Z",
+      "updated_at": "2026-02-15T00:13:17Z",
+      "text": "Internal refactor: simplify response tuple unpacking in make_response in app.py This is an internal, non-user-facing refactor. The `make_response` method currently contains inline logic to unpack response tuples with different valid shapes. While this logic is correct, it is dense and increases cognitive load in an already large method. Refactoring this logic into a small private helper would improve readability and long-term maintainability without changing behavior. The current tuple unpacking logic handles multiple valid forms ((body, status, headers), (body, status), (body, headers)) inline inside `make_response`. This makes the control flow harder to follow and duplicates validation responsibilities within the method. This is not easily improved via subclassing or extensions, as the logic is internal to Flask's response handling. A small internal refactor would isolate this responsibility and make future maintenance safer.",
+      "meta": {
+        "state": "closed",
+        "labels": [],
+        "assignees": []
+      }
+    },
+    {
+      "artifact_id": "issue:5907:event:22433664895",
+      "artifact_type": "event",
+      "repo": "pallets/flask",
+      "issue_number": 5907,
+      "source_id": "22433664895",
+      "source_url": "https://github.com/pallets/flask/issues/5907",
+      "author": "davidism",
+      "created_at": "2026-01-31T21:17:45Z",
+      "updated_at": "2026-01-31T21:17:45Z",
+      "text": "Issue was closed by @davidism.",
+      "meta": {
+        "event": "closed",
+        "assignee": null,
+        "label": null
+      }
+    },
+    {
+      "artifact_id": "issue:5907:event:22796967126",
+      "artifact_type": "event",
+      "repo": "pallets/flask",
+      "issue_number": 5907,
+      "source_id": "22796967126",
+      "source_url": "https://github.com/pallets/flask/issues/5907",
+      "author": "github-actions[bot]",
+      "created_at": "2026-02-15T00:13:17Z",
+      "updated_at": "2026-02-15T00:13:17Z",
+      "text": "Event 'locked' by @github-actions[bot].",
+      "meta": {
+        "event": "locked",
+        "assignee": null,
+        "label": null
+      }
+    },
+    {
+      "artifact_id": "issue:5897:body",
+      "artifact_type": "issue_body",
+      "repo": "pallets/flask",
+      "issue_number": 5897,
+      "source_id": "3851904746",
+      "source_url": "https://github.com/pallets/flask/issues/5897",
+      "author": "PeterJCLaw",
+      "created_at": "2026-01-24T19:34:47Z",
+      "updated_at": "2026-02-11T00:17:32Z",
+      "text": "package detection fails with namespace package in editable mode Given a package which uses namespace packaging and has been installed using \"editable installs\", Flask's scaffold (specifically `_find_package_path`) will error if the name passed to `Flask(...)` is the package name rather than a sub-module. This affects cases where the name is the name of the package (and thus potentially not actually the `__name__`) though also happens when using `__name__` and the app is defined within a `__init__.py` in the root of the namespaced package. Notably the issue only appears when importing the app elsewhere -- running from a python process launched at the parent of the namespace package tree hides this. Example project: ``` ├── flask-app │ ├── setup.py │ └── sr │ ├── comp │ │ ├── http │ │ │ ├── __init__.py │ │ └── __init__.pyi │ └── __init__.pyi └── run.py ``` The `__init__.pyi` files are empty and shouldn't be needed, however are present in my original project as typing markers. ```python # run.py print(\"\") print(\"run.py\") print(\"\") from sr.comp.http import app print(\"\") print(\"/run.py\") print(\"\") ``` ```python # flask-app/sr/comp/http/__init__.py from flask import Flask print(\"app = Flask(__name__)\") app = Flask(__name__) # reproduces when defined in __init__.py print(\"app = Flask('sr.comp.http')\") app = Flask(\"sr.comp.http\") # reproduces when defined in e.g: server.py and `app` is re-exported via __init__.py # this latter case was my original case @app.route(\"/\") def hello(): return \"Hello, World!\" ``` <details> <summary><code>flask-app/setup.py</code></summary> ``` python # flask-app/setup.py from setuptools import find_namespace_packages, setup setup( name='sr.comp.http', packages=find_namespace_packages(include=['sr.*']), namespace_packages=['sr', 'sr.comp'], install_requires=[ 'Flask >=2.2', ], ) ``` </details> The error is: ``` Traceback (most recent call last): File \"/home/peter/play/flask-play/run.py\", line 6, in <module> from sr.comp.http import app File \"/home/peter/play/flask-play/flask-app/sr/comp/http/__init__.py\", line 5, in <module> app = Flask(__name__) ^^^^^^^^^^^^^^^ File \"/home/peter/.virtualenvs/flask-play/lib/python3.11/site-packages/flask/app.py\", line 239, in __init__ super().__init__( File \"/home/peter/.virtualenvs/flask-play/lib/python3.11/site-packages/flask/sansio/app.py\", line 304, in __init__ instance_path = self.auto_find_instance_path() ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ File \"/home/peter/.virtualenvs/flask-play/lib/python3.11/site-packages/flask/sansio/app.py\", line 518, in auto_find_instance_path prefix, package_path = find_package(self.import_name) ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ File \"/home/peter/.virtualenvs/flask-play/lib/python3.11/site-packages/flask/sansio/scaffold.py\", line 783, in find_package package_path = _find_package_path(import_name) ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ File \"/home/peter/.virtualenvs/flask-play/lib/python3.11/site-packages/flask/sansio/scaffold.py\", line 748, in _find_package_path search_location = next( ^^^^^ StopIteration ``` I've been testing this by running the following to compare against a non-editable install: ``` shell pip install flask-app/ && python run.py && pip install -e flask-app/ && python run.py ``` I've also made some modifications to `flask/sansio/scaffold.py` to debug, which provides some insight. It looks like the issue is to do with whether or not the `package_path` is found to be relative to the `package_spec.submodule_search_locations`. <details> <summary><code>scaffold.py</code> diff</summary> ```diff @@ -708,7 +708,10 @@ def _find_package_path(import_name: str) -> str: \"\"\"Find the path that contains the package or module.\"\"\" + print() + print(f\"_find_package_path({import_name=})\") root_mod_name, _, _ = import_name.partition(\".\") + print(f\"_find_package_path: {root_mod_name=}\") try: root_spec = importlib.util.find_spec(root_mod_name) @@ -721,18 +724,27 @@ # - the module name was invalid # - the module name is __main__ # - we raised `ValueError` due to `root_spec` being `None` + print(\"CWD\") return os.getcwd() if root_spec.submodule_search_locations: if root_spec.origin is None or root_spec.origin == \"namespace\": # namespace package package_spec = importlib.util.find_spec(import_name) + print(f\"{package_spec=}\") if package_spec is not None and package_spec.submodule_search_locations: # Pick the path in the namespace that contains the submodule. package_path = pathlib.Path( os.path.commonpath(package_spec.submodule_search_locations) ) + print(f\"{package_path=}\") + search_locations=[ + location + for location in root_spec.submodule_search_locations + if package_path.is_relative_to(location) + ] + print(f\"{search_locations=}\") search_location = next( location for location in root_spec.submodule_search_locations @@ -740,14 +752,18 @@ ) else: # Pick the first path. + print(\"Picking the first path\") search_location = root_spec.submodule_search_locations[0] + print(f\"{os.path.dirname(search_location)=}\") return os.path.dirname(search_location) else: # package with __init__.py + print(f\"package with __init__.py: {os.path.dirname(os.path.dirname(root_spec.origin))=}\") return os.path.dirname(os.path.dirname(root_spec.origin)) else: # module + print(f\"module: {os.path.dirname(root_spec.origin)=}\") return os.path.dirname(root_spec.origin) # type: ignore[type-var, return-value] ``` </details> <details> <summary>Full output (with scaffold printing)</summary> ``` Processing ./flask-app Installing build dependencies ... done Getting requirements to build wheel ... done Preparing metadata (pyproject.toml) ... done Requirement already satisfied: Flask>=2.2 in /home/peter/.virtualenvs/flask-play/lib/python3.11/site-packages (from sr.comp.http==0.0.0) (3.1.2) Requirement already satisfied: blinker>=1.9.0 in /home/peter/.virtualenvs/flask-play/lib/python3.11/site-packages (from Flask>=2.2->sr.comp.http==0.0.0) (1.9.0) Requirement already satisfied: click>=8.1.3 in /home/peter/.virtualenvs/flask-play/lib/python3.11/site-packages (from Flask>=2.2->sr.comp.http==0.0.0) (8.3.1) Requirement already satisfied: itsdangerous>=2.2.0 in /home/peter/.virtualenvs/flask-play/lib/python3.11/site-packages (from Flask>=2.2->sr.comp.http==0.0.0) (2.2.0) Requirement already satisfied: jinja2>=3.1.2 in /home/peter/.virtualenvs/flask-play/lib/python3.11/site-packages (from Flask>=2.2->sr.comp.http==0.0.0) (3.1.6) Requirement already satisfied: markupsafe>=2.1.1 in /home/peter/.virtualenvs/flask-play/lib/python3.11/site-packages (from Flask>=2.2->sr.comp.http==0.0.0) (3.0.3) Requirement already satisfied: werkzeug>=3.1.0 in /home/peter/.virtualenvs/flask-play/lib/python3.11/site-packages (from Flask>=2.2->sr.comp.http==0.0.0) (3.1.5) Building wheels for collected packages: sr.comp.http Building wheel for sr.comp.http (pyproject.toml) ... done Created wheel for sr.comp.http: filename=sr_comp_http-0.0.0-py3-none-any.whl size=2244 sha256=3f8b9ef6c2be19dfe215b2c753e08eba17f1d351d8990a453ee57f25b6554bad Stored in directory: /home/peter/.cache/pip/wheels/cd/9c/02/1c78322e6692d753ef839820d853e11679311f30eec26b3432 Successfully built sr.comp.http Installing collected packages: sr.comp.http Attempting uninstall: sr.comp.http Found existing installation: sr.comp.http 0.0.0 Uninstalling sr.comp.http-0.0.0: Successfully uninstalled sr.comp.http-0.0.0 Successfully installed sr.comp.http-0.0.0 run.py app = Flask(__name__) _find_package_path(import_name='sr.comp.http') _find_package_path: root_mod_name='sr' package_spec=ModuleSpec(name='sr.comp.http', loader=<_frozen_importlib_external.SourceFileLoader object at 0x7b2244ea6c50>, origin='/home/peter/.virtualenvs/flask-play/lib/python3.11/site-packages/sr/comp/http/__init__.py', submodule_search_locations=['/home/peter/.virtualenvs/flask-play/lib/python3.11/site-packages/sr/comp/http']) package_path=PosixPath('/home/peter/.virtualenvs/flask-play/lib/python3.11/site-packages/sr/comp/http') search_locations=['/home/peter/.virtualenvs/flask-play/lib/python3.11/site-packages/sr'] os.path.dirname(search_location)='/home/peter/.virtualenvs/flask-play/lib/python3.11/site-packages' app = Flask('sr.comp.http') _find_package_path(import_name='sr.comp.http') _find_package_path: root_mod_name='sr' package_spec=ModuleSpec(name='sr.comp.http', loader=<_frozen_importlib_external.SourceFileLoader object at 0x7b2244ea6c50>, origin='/home/peter/.virtualenvs/flask-play/lib/python3.11/site-packages/sr/comp/http/__init__.py', submodule_search_locations=['/home/peter/.virtualenvs/flask-play/lib/python3.11/site-packages/sr/comp/http']) package_path=PosixPath('/home/peter/.virtualenvs/flask-play/lib/python3.11/site-packages/sr/comp/http') search_locations=['/home/peter/.virtualenvs/flask-play/lib/python3.11/site-packages/sr'] os.path.dirname(search_location)='/home/peter/.virtualenvs/flask-play/lib/python3.11/site-packages' /run.py Obtaining file:///home/peter/play/flask-play/flask-app Installing build dependencies ... done Checking if build backend supports build_editable ... done Getting requirements to build editable ... done Preparing editable metadata (pyproject.toml) ... done Requirement already satisfied: Flask>=2.2 in /home/peter/.virtualenvs/flask-play/lib/python3.11/site-packages (from sr.comp.http==0.0.0) (3.1.2) Requirement already satisfied: blinker>=1.9.0 in /home/peter/.virtualenvs/flask-play/lib/python3.11/site-packages (from Flask>=2.2->sr.comp.http==0.0.0) (1.9.0) Requirement already satisfied: click>=8.1.3 in /home/peter/.virtualenvs/flask-play/lib/python3.11/site-packages (from Flask>=2.2->sr.comp.http==0.0.0) (8.3.1) Requirement already satisfied: itsdangerous>=2.2.0 in /home/peter/.virtualenvs/flask-play/lib/python3.11/site-packages (from Flask>=2.2->sr.comp.http==0.0.0) (2.2.0) Requirement already satisfied: jinja2>=3.1.2 in /home/peter/.virtualenvs/flask-play/lib/python3.11/site-packages (from Flask>=2.2->sr.comp.http==0.0.0) (3.1.6) Requirement already satisfied: markupsafe>=2.1.1 in /home/peter/.virtualenvs/flask-play/lib/python3.11/site-packages (from Flask>=2.2->sr.comp.http==0.0.0) (3.0.3) Requirement already satisfied: werkzeug>=3.1.0 in /home/peter/.virtualenvs/flask-play/lib/python3.11/site-packages (from Flask>=2.2->sr.comp.http==0.0.0) (3.1.5) Building wheels for collected packages: sr.comp.http Building editable for sr.comp.http (pyproject.toml) ... done Created wheel for sr.comp.http: filename=sr_comp_http-0.0.0-0.editable-py3-none-any.whl size=3459 sha256=a216bf634bddcae47327c746fe989a8a4115384810f305d565bb098311dbaeaa Stored in directory: /tmp/pip-ephem-wheel-cache-6dk2qx5_/wheels/cd/9c/02/1c78322e6692d753ef839820d853e11679311f30eec26b3432 Successfully built sr.comp.http Installing collected packages: sr.comp.http Attempting uninstall: sr.comp.http Found existing installation: sr.comp.http 0.0.0 Uninstalling sr.comp.http-0.0.0: Successfully uninstalled sr.comp.http-0.0.0 Successfully installed sr.comp.http-0.0.0 run.py app = Flask(__name__) _find_package_path(import_name='sr.comp.http') _find_package_path: root_mod_name='sr' package_spec=ModuleSpec(name='sr.comp.http', loader=<_frozen_importlib_external.SourceFileLoader object at 0x7e0760a89f90>, origin='/home/peter/play/flask-play/flask-app/sr/comp/http/__init__.py', submodule_search_locations=['/home/peter/play/flask-play/flask-app/sr/comp/http']) package_path=PosixPath('/home/peter/play/flask-play/flask-app/sr/comp/http') search_locations=[] Traceback (most recent call last): File \"/home/peter/play/flask-play/run.py\", line 6, in <module> from sr.comp.http import app File \"/home/peter/play/flask-play/flask-app/sr/comp/http/__init__.py\", line 5, in <module> app = Flask(__name__) ^^^^^^^^^^^^^^^ File \"/home/peter/.virtualenvs/flask-play/lib/python3.11/site-packages/flask/app.py\", line 239, in __init__ super().__init__( File \"/home/peter/.virtualenvs/flask-play/lib/python3.11/site-packages/flask/sansio/app.py\", line 304, in __init__ instance_path = self.auto_find_instance_path() ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ File \"/home/peter/.virtualenvs/flask-play/lib/python3.11/site-packages/flask/sansio/app.py\", line 518, in auto_find_instance_path prefix, package_path = find_package(self.import_name) ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ File \"/home/peter/.virtualenvs/flask-play/lib/python3.11/site-packages/flask/sansio/scaffold.py\", line 783, in find_package package_path = _find_package_path(import_name) ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ File \"/home/peter/.virtualenvs/flask-play/lib/python3.11/site-packages/flask/sansio/scaffold.py\", line 748, in _find_package_path search_location = next( ^^^^^ StopIteration ``` </details> Environment: - Python version: 3.11 (and others) - Flask version: 3.1.2, also 2.x",
+      "meta": {
+        "state": "closed",
+        "labels": [],
+        "assignees": []
+      }
+    },
+    {
+      "artifact_id": "issue:5897:comment:3797910331",
+      "artifact_type": "comment",
+      "repo": "pallets/flask",
+      "issue_number": 5897,
+      "source_id": "3797910331",
+      "source_url": "https://github.com/pallets/flask/issues/5897#issuecomment-3797910331",
+      "author": "davidism",
+      "created_at": "2026-01-26T05:03:12Z",
+      "updated_at": "2026-01-26T05:03:12Z",
+      "text": "I can't reproduce this with the information provided. Thanks for providing a minimal example, but it's still a bit all over the place. You're still using the old `setup.py` pattern, rather than using `pyproject.toml` with a `[build-system]` section. You're also using `namespace_packages`, which is the legacy pkg_resources pattern, and you're not calling the required legacy setup code in the init files, so installing your example gives an error `error in sr.comp.http setup command: Distribution contains no modules or packages for namespace package 'sr'`. You've also got an unsupported version of Flask listed, although it's just a lower bound, so the latest version gets installed. Ignoring `namespace_packages` and just using `packages` (still with namespaces), both apps `__init__` and `server` work for me from `run.py` and with `flask run`. I think the problem is in your project configuration. Here's a modern update of your example that works: <details> ``` example └── run.py └── app └── pyproject.toml └── src └── sr └── comp └── http └── server.py └── __init__.py ``` `app/pyproject.toml` ```toml [project] name = \"sr.comp.http\" version = \"0.1.0\" description = \"\" requires-python = \">=3.14\" dependencies = [ \"flask\", ] [build-system] requires = [\"uv_build>=0.9.26,<0.10.0\"] build-backend = \"uv_build\" [tool.uv.build-backend] module-name = \"sr.comp.http\" ``` `app/src/sr/comp/http/__init__.py` ```python from flask import Flask app = Flask(__name__) ``` `app/src/sr/comp/http/server.py` ```python from flask import Flask app = Flask(\"sr.cmp.http\") ``` `run.py` ```python from sr.comp.http import app print(app.import_name) ``` ``` uv venv . ./.venv/bin/activate uv pip install ./app python run.py ``` You can examine `app/.venv/lib/python3.14/site-packages/sr` to confirm that it was installed as a namespace. </details>",
+      "meta": {}
+    },
+    {
+      "artifact_id": "issue:5897:comment:3800170835",
+      "artifact_type": "comment",
+      "repo": "pallets/flask",
+      "issue_number": 5897,
+      "source_id": "3800170835",
+      "source_url": "https://github.com/pallets/flask/issues/5897#issuecomment-3800170835",
+      "author": "PeterJCLaw",
+      "created_at": "2026-01-26T15:24:35Z",
+      "updated_at": "2026-01-26T15:24:35Z",
+      "text": "@davidism thanks for looking at this and apologies if the cut-down wasn't clear. Just to check -- does your example still not reproduce the issue if the package is installed in editable mode? (i.e: `pip install -e ./app`) For me the issue only reproduces when the package is installed in editable mode.",
+      "meta": {}
+    },
+    {
+      "artifact_id": "issue:5897:comment:3800268883",
+      "artifact_type": "comment",
+      "repo": "pallets/flask",
+      "issue_number": 5897,
+      "source_id": "3800268883",
+      "source_url": "https://github.com/pallets/flask/issues/5897#issuecomment-3800268883",
+      "author": "davidism",
+      "created_at": "2026-01-26T15:42:02Z",
+      "updated_at": "2026-01-26T15:42:02Z",
+      "text": "Still works.",
+      "meta": {}
+    },
+    {
+      "artifact_id": "issue:5897:comment:3807550447",
+      "artifact_type": "comment",
+      "repo": "pallets/flask",
+      "issue_number": 5897,
+      "source_id": "3807550447",
+      "source_url": "https://github.com/pallets/flask/issues/5897#issuecomment-3807550447",
+      "author": "PeterJCLaw",
+      "created_at": "2026-01-27T21:10:27Z",
+      "updated_at": "2026-01-27T21:10:27Z",
+      "text": "Hrm, it turns out my original case also required a \"flat layout\" (rather than a \"src layout\") though that doesn't change anything when using a `pyproject.toml` based install. I think the conclusion here is that something about the newer style editable install sets up the paths differently, which lets the code work. I'm not sure why you were unable to reproduce the issue, though I'm happy to accept that I need to bite the bullet and change the build system in use. Thanks for investigating.",
+      "meta": {}
+    },
+    {
+      "artifact_id": "issue:5897:comment:3807715716",
+      "artifact_type": "comment",
+      "repo": "pallets/flask",
+      "issue_number": 5897,
+      "source_id": "3807715716",
+      "source_url": "https://github.com/pallets/flask/issues/5897#issuecomment-3807715716",
+      "author": "davidism",
+      "created_at": "2026-01-27T21:51:58Z",
+      "updated_at": "2026-01-27T21:54:07Z",
+      "text": "Without src works for me also. Your exact example works fine, minus the legacy config I mentioned. My example was just to show what I'd do now, since there were a lot of other legacy patterns being used.",
+      "meta": {}
+    },
+    {
+      "artifact_id": "issue:5897:event:22270229348",
+      "artifact_type": "event",
+      "repo": "pallets/flask",
+      "issue_number": 5897,
+      "source_id": "22270229348",
+      "source_url": "https://github.com/pallets/flask/issues/5897",
+      "author": "davidism",
+      "created_at": "2026-01-25T03:53:59Z",
+      "updated_at": "2026-01-25T03:53:59Z",
+      "text": "Issue title renamed from 'Flask scaffold errors with editable-installed namespace packaged app' to 'package detection fails with namespace package in editable mode' by @davidism.",
+      "meta": {
+        "event": "renamed",
+        "assignee": null,
+        "label": null
+      }
+    },
+    {
+      "artifact_id": "issue:5897:event:22280828453",
+      "artifact_type": "event",
+      "repo": "pallets/flask",
+      "issue_number": 5897,
+      "source_id": "22280828453",
+      "source_url": "https://github.com/pallets/flask/issues/5897",
+      "author": "davidism",
+      "created_at": "2026-01-26T05:03:12Z",
+      "updated_at": "2026-01-26T05:03:12Z",
+      "text": "Issue was closed by @davidism.",
+      "meta": {
+        "event": "closed",
+        "assignee": null,
+        "label": null
+      }
+    },
+    {
+      "artifact_id": "issue:5897:event:22292311676",
+      "artifact_type": "event",
+      "repo": "pallets/flask",
+      "issue_number": 5897,
+      "source_id": "22292311676",
+      "source_url": "https://github.com/pallets/flask/issues/5897",
+      "author": "davidism",
+      "created_at": "2026-01-26T15:24:36Z",
+      "updated_at": "2026-01-26T15:24:36Z",
+      "text": "Event 'mentioned' by @davidism.",
+      "meta": {
+        "event": "mentioned",
+        "assignee": null,
+        "label": null
+      }
+    },
+    {
+      "artifact_id": "issue:5897:event:22292311708",
+      "artifact_type": "event",
+      "repo": "pallets/flask",
+      "issue_number": 5897,
+      "source_id": "22292311708",
+      "source_url": "https://github.com/pallets/flask/issues/5897",
+      "author": "davidism",
+      "created_at": "2026-01-26T15:24:36Z",
+      "updated_at": "2026-01-26T15:24:36Z",
+      "text": "Event 'subscribed' by @davidism.",
+      "meta": {
+        "event": "subscribed",
+        "assignee": null,
+        "label": null
+      }
+    },
+    {
+      "artifact_id": "issue:5897:event:22689904493",
+      "artifact_type": "event",
+      "repo": "pallets/flask",
+      "issue_number": 5897,
+      "source_id": "22689904493",
+      "source_url": "https://github.com/pallets/flask/issues/5897",
+      "author": "github-actions[bot]",
+      "created_at": "2026-02-11T00:17:32Z",
+      "updated_at": "2026-02-11T00:17:32Z",
+      "text": "Event 'locked' by @github-actions[bot].",
+      "meta": {
+        "event": "locked",
+        "assignee": null,
+        "label": null
+      }
+    },
+    {
+      "artifact_id": "issue:5901:body",
+      "artifact_type": "issue_body",
+      "repo": "pallets/flask",
+      "issue_number": 5901,
+      "source_id": "3854501536",
+      "source_url": "https://github.com/pallets/flask/issues/5901",
+      "author": "RanaUniverse",
+      "created_at": "2026-01-26T04:48:05Z",
+      "updated_at": "2026-02-10T00:17:30Z",
+      "text": "Flask's blueprint's render templates rendering another blueprint's folder's html file !!! I was learning Flask & Web Application making. I am getting the problem when i am return the render templates of a html file in blueprint i am getting another blueprint's html file. I am sharing the screenshots here below and say what is the problem here. <img width=\"1366\" height=\"768\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/1eeb056a-b53a-434b-ae46-e7e7712a448f\" /> See here in the render template at line 33, i wish it will render the `checking.html` file which is present in the `general_bp`'s folder. <img width=\"1366\" height=\"768\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/f5e491bc-b5b0-43f5-aa9a-0517197f2e79\" /> <img width=\"1366\" height=\"768\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/1dd4ac18-26d5-4f9f-b587-a6f7256c60a1\" /> See here is the two `checking.html` file in different folder, but as i send the first image which should render the checking.html in the `general` folder it is rendering the `auth/checking.html` file. <img width=\"1366\" height=\"768\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/ad73f9b2-7e6e-4a9f-859d-6ead96b846eb\" /> As you see when i open the `/checking` route it is always giving the `auth>checking.html` file. I am not understanding why this is happening. is this any problem or i make any mistake here which cause the problem. Or anything i am doing wrong when i am in the `routes.py` file what the wrong, maybe in different blueprint's folder i have same file name so why it is taking another file 😢 what you can see any problem here? Please try to give a solution to this. Environment: Linux > Ubuntu(Xubuntu) UV Python 3.14.0 <img width=\"587\" height=\"475\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/17f49e54-707d-4c36-8616-b31e897a51ca\" />",
+      "meta": {
+        "state": "closed",
+        "labels": [],
+        "assignees": []
+      }
+    },
+    {
+      "artifact_id": "issue:5901:comment:3797892707",
+      "artifact_type": "comment",
+      "repo": "pallets/flask",
+      "issue_number": 5901,
+      "source_id": "3797892707",
+      "source_url": "https://github.com/pallets/flask/issues/5901#issuecomment-3797892707",
+      "author": "davidism",
+      "created_at": "2026-01-26T04:51:33Z",
+      "updated_at": "2026-01-26T04:51:33Z",
+      "text": "https://flask.palletsprojects.com/en/stable/blueprints/#templates Duplicate of #3747 and others",
+      "meta": {}
+    },
+    {
+      "artifact_id": "issue:5901:comment:3797892857",
+      "artifact_type": "comment",
+      "repo": "pallets/flask",
+      "issue_number": 5901,
+      "source_id": "3797892857",
+      "source_url": "https://github.com/pallets/flask/issues/5901#issuecomment-3797892857",
+      "author": "RanaUniverse",
+      "created_at": "2026-01-26T04:51:40Z",
+      "updated_at": "2026-01-26T04:51:40Z",
+      "text": "I am attaching the current source code of the my repo's which was i just learning here. This is the commit when i am seeing this problem the exact repo at the moment is below: Please try to solve this issue https://github.com/RanaUniverse/wishlist_web_app/tree/96db2bdc2bba5daed23277095d9be21ce5272275",
+      "meta": {}
+    },
+    {
+      "artifact_id": "issue:5901:event:22280726239",
+      "artifact_type": "event",
+      "repo": "pallets/flask",
+      "issue_number": 5901,
+      "source_id": "22280726239",
+      "source_url": "https://github.com/pallets/flask/issues/5901",
+      "author": "davidism",
+      "created_at": "2026-01-26T04:51:33Z",
+      "updated_at": "2026-01-26T04:51:33Z",
+      "text": "Issue was closed by @davidism.",
+      "meta": {
+        "event": "closed",
+        "assignee": null,
+        "label": null
+      }
+    },
+    {
+      "artifact_id": "issue:5901:event:22658459105",
+      "artifact_type": "event",
+      "repo": "pallets/flask",
+      "issue_number": 5901,
+      "source_id": "22658459105",
+      "source_url": "https://github.com/pallets/flask/issues/5901",
+      "author": "github-actions[bot]",
+      "created_at": "2026-02-10T00:17:30Z",
+      "updated_at": "2026-02-10T00:17:30Z",
+      "text": "Event 'locked' by @github-actions[bot].",
+      "meta": {
+        "event": "locked",
+        "assignee": null,
+        "label": null
+      }
+    }
+  ]
+}

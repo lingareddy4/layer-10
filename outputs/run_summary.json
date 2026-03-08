@@ -1,0 +1,18 @@
+{
+  "corpus_path": "C:\\Users\\linga\\OneDrive\\Desktop\\layer 10\\outputs\\raw\\github_corpus_pallets_flask.json",
+  "memory_graph_path": "C:\\Users\\linga\\OneDrive\\Desktop\\layer 10\\outputs\\memory_graph.json",
+  "viz_index_path": "C:\\Users\\linga\\OneDrive\\Desktop\\layer 10\\viz\\index.html",
+  "questions": [
+    "What routing-related issues were discussed, and what decisions were made?",
+    "Which issues were reopened after being closed?",
+    "What action items were proposed in recent bug reports?"
+  ],
+  "context_pack_count": 3,
+  "counts": {
+    "entities": 76,
+    "literal_nodes": 22,
+    "claims": 145,
+    "evidences": 893,
+    "artifacts": 51
+  }
+}
